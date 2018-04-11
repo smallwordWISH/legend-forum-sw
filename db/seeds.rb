@@ -5,3 +5,29 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+category_list = [ 
+  {name: "technology" },
+  {name: "culture" },
+  {name: "entrepreneurship" },
+  {name: "creativity" },
+  {name: "self" },
+  {name: "politics" },
+  {name: "media" }, 
+  {name: "photography" },
+  {name: "design" },
+  {name: "art" },
+  {name: "music" }, 
+  {name: "film" },
+  {name: "work out" },
+  {name: "psychology" },
+]
+
+category_list.each do |category|
+  Category.create( name: category[:name])
+end
+
+puts "have created #{Category.count} category data"
+
+User.create(name:"admin", email: "admin@example.com", password: "12345678", role: "admin")
+puts "Default admin created! ( email: admin@example.com, password: 12345678 )"

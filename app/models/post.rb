@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   mount_uploader :picture, PictureUploader
-  validates_presence_of :content, :authority, :draft
+  validates_presence_of :content, :authority
 
   belongs_to :category
   belongs_to :user

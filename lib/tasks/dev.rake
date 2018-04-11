@@ -1,0 +1,86 @@
+namespace :dev do
+  task fake_user: :environment do
+    User.destroy_all
+    20.times do |i|
+      name = FFaker::Name::first_name
+      file = File.open("#{Rails.root}/public/avatar/user#{i+1}.jpg")
+
+      user = User.new(
+        name: name,
+        email: "#{name}@email.com",
+        password: "000000",
+        intro: FFaker::Lorem::sentence,
+        avatar: file
+      )
+
+      user.save!
+    end
+    puts "have created #{User.count} fake users"
+  end
+
+  task fake_post: :environment do 
+    Post.destroy_all
+  
+    30.times do |i|
+      Post.create!(
+        category: Category.all.sample,
+        content: FFaker::Lorem.sentence,
+        user: User.all.sample,
+        authority: "all"
+      )
+    end
+
+    puts "have created #{Post.count} post data"
+  end
+
+  task fake_reply: :environment do
+    Reply.destroy_all
+
+    50.times do
+      Reply.create!(
+        comment: FFaker::Lorem.sentence,
+        post: Post.all.sample,
+        user: User.all.sample
+      )
+    end
+
+    puts "have created  #{Reply.count} reply data"
+  end
+
+  # task fake_views: :environment do
+  #   View.destroy_all
+
+  #   50.times do
+  #     View.create!(
+  #       user: User.all.sample,
+  #       post: Post.all.sample
+  #     )
+  #   end
+  #   puts "have created fake Views"
+  #   puts "now you have #{View.count} View data"
+  # end
+
+  # task fake_followship: :environment do
+  #   Followship.destroy_all
+
+  #   50.times do
+  #     Followship.create(
+  #       user: User.all.sample,
+  #       following: User.all.sample
+  #     )
+  #   end
+  #   puts "have created fake followships"
+  #   puts "now you have #{Followship.count} followship data"
+  # end
+
+  task fake_all: :environment do
+    Rake::Task['db:drop'].execute
+    Rake::Task['db:migrate'].execute
+    Rake::Task['db:seed'].execute
+    Rake::Task['dev:fake_user'].execute
+    Rake::Task['dev:fake_post'].execute
+    Rake::Task['dev:fake_reply'].execute
+    # Rake::Task['dev:test'].execute
+  end
+
+end
