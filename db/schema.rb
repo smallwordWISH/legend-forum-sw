@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180411103001) do
+ActiveRecord::Schema.define(version: 20180411120950) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20180411103001) do
     t.string "picture"
     t.string "authority"
     t.boolean "draft"
-    t.integer "replies_count"
-    t.integer "viewed_count"
+    t.integer "replies_count", default: 0
+    t.integer "views_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 20180411103001) do
     t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "replies_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
