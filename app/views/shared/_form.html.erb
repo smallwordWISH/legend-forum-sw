@@ -19,7 +19,7 @@
         <%= f.label :authority, 'Myself' %>
         <%= f.label :category, 'Category' %>
         <%= f.collection_select :category_id, Category.all, :id, :name, prompt: 'Please select category' %>
-      <% if post.title.present? %>
+      <% if post.draft == false && post.title.present? %>
         <%= f.submit 'Update' %> 
       <% else %>
         <%= f.submit 'Draft' %>

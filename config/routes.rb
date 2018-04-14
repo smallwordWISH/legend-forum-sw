@@ -20,7 +20,15 @@ Rails.application.routes.draw do
 
   resources :views, only: [:create]
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show, :edit, :update] do
+    member do
+      get :my_post
+      get :my_comment
+      get :my_collect
+      get :my_draft
+      get :my_friend
+    end
+  end
 
   namespace :admin do
     resources :categories, except: [:show, :new, :edit]

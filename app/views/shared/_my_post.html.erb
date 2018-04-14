@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><%= link_to 'My Post', my_post_user_path(user), remote: true %></li>
+  <li role="presentation"><%= link_to 'My Comment', my_comment_user_path(user), remote: true %></li>
+  <li role="presentation"><%= link_to 'My Collect', my_collect_user_path(user), remote: true %></li>
+  <li role="presentation"><%= link_to 'My Draft', my_draft_user_path(user), remote: true %></li>
+  <li role="presentation"><%= link_to 'My Friend', my_friend_user_path(user), remote: true %></li>
+</ul>
+<div class="user my-post-panel">
+  <table class="table table-hover">
+    <% user.posts.each do |post| %>
+      <% if post.draft == false %>
+        <tr>
+          <td><%= link_to post.title, post_path(post) %></td>
+          <td>
+            <%= post.draft ? 'Draft' : 'Published' %>
+          </td>
+          <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+</div>
