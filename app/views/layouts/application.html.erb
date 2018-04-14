@@ -7,8 +7,41 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+    <header>
+      <nav>
+        <div class="container">
+          <div id="logo">
+            <%= link_to 'Legend Forum', root_path %>
+          </div>
+          <%= link_to 'New Post', new_post_path %>
+          <div id="menu">
+            <li><%= link_to '登出', destroy_user_session_path, method: :delete %></li>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div id="top" class="alert-row">
+      <% if flash[:notice] %>
+        <div class="notice alert alert-success" role="alert">
+          <div class="container">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+            <div class="text-center">
+              <%= flash[:notice] %>
+            </div>
+          </div>
+        </div>
+      <% elsif flash[:alert]%> 
+        <div class="alert alert-danger" role="alert">
+          <div class="container">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+            <div class="text-center">
+              <%= flash[:alert] %>
+            </div>
+          </div>
+        </div>               
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>

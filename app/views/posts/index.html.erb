@@ -1,1 +1,39 @@
-這是前台
+<div class="container">
+  <h2>Legend Forum</h2>
+  <div id="posts-panel">
+    <div id="categories-panel">
+      <% @categories.each do |category| %>
+        <%= category.name %>
+      <% end %>
+    </div>
+    <div id="post-table">
+      <table class="table table-hover">
+        <tr>
+          <th>Replies count</th>
+          <th>Title</th>
+          <th>Last replied at</th>
+          <th>Viewed count</th>
+        </tr>
+        <% @posts.each do |post| %>
+          <tr>
+            <td><%= post.replies_count %></td>
+            <td>
+              <%= link_to post.title, post_path(post) %>
+            </td>
+            <td>
+              <% if post.replies.present? %>
+                <%= post.replies.last.created_at.strftime("%Y-%m-%d %H:%M") %>
+              <% else %>
+                -
+              <% end %>
+            </td>
+            <td><%= post.views_count %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="paginate">
+      <%= paginate @posts %>
+    </div>
+  </div>
+</div>

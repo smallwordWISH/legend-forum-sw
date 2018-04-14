@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="user-panel">
+    <div class="user-item">
+      <div class="avatar-sm">
+        <%= image_tag(@user.avatar) %>
+      </div>
+      <%= @user.name %>
+    </div>
+    <div class="user-intro">
+      <%= @user.intro %>
+      <% if @user == current_user %>
+        <%= link_to 'Edit', edit_user_path(current_user) %>
+      <% end %>
+    </div>
+  </div>
+  <div class="user-pills-panel">
+
+  </div>
+</div>

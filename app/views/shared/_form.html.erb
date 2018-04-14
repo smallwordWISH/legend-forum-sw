@@ -1,0 +1,32 @@
+<div class="container">
+  <%= form_for post do |f| %>
+    <div class="post-form form-group">
+      <div>
+        <%= f.text_field :title, placeholder: "Title", required: true, class: "form-control" %>
+      </div>
+      <div>
+        <%= f.text_area :content, placeholder: "What's on your mind?", required: true, maxlength: 140, class: "tweet-form-textarea form-control" %>
+      </div>
+      <%= f.label :picture, "Picture" %>
+        <%= image_tag post.picture, width: '300px' if post.picture? %>
+        <%= f.file_field :picture %>
+        <label> Who can see </label>
+        <%= f.radio_button :authority, 'all' %>
+        <%= f.label :authority, 'All' %>
+        <%= f.radio_button :authority, 'friend' %>
+        <%= f.label :authority, 'Friend' %>
+        <%= f.radio_button :authority, 'myself' %>
+        <%= f.label :authority, 'Myself' %>
+        <%= f.label :category, 'Category' %>
+        <%= f.collection_select :category_id, Category.all, :id, :name, prompt: 'Please select category' %>
+      <% if post.title.present? %>
+        <%= f.submit 'Update' %> 
+      <% else %>
+        <%= f.submit 'Draft' %>
+        <%= f.submit 'Post' %> 
+      <% end %>
+      </div> 
+    </div>
+
+  <% end %>
+</div>

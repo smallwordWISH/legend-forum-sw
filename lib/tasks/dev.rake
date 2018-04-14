@@ -1,6 +1,10 @@
 namespace :dev do
   task fake_user: :environment do
     User.destroy_all
+
+    User.create(name:"admin", email: "admin@example.com", password: "12345678", role: "admin")
+    puts "Default admin created! ( email: admin@example.com, password: 12345678 )"
+
     20.times do |i|
       name = FFaker::Name::first_name
       file = File.open("#{Rails.root}/public/avatar/user#{i+1}.jpg")
@@ -24,7 +28,8 @@ namespace :dev do
     30.times do |i|
       Post.create!(
         category: Category.all.sample,
-        content: FFaker::Lorem.sentence,
+        title: FFaker::Lorem.sentence,
+        content: FFaker::Lorem.paragraph,
         user: User.all.sample,
         authority: "all"
       )

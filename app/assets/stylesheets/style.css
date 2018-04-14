@@ -1,0 +1,24 @@
+/* post show */
+
+.post-panel, .reply-panel {
+  display: grid;
+  grid-template-columns: 300px 1fr 150px;
+}
+
+.post-user-item, .reply-user-item, .user-item {
+  text-align: center;
+}
+
+.avatar-sm {
+  object-fit: cover;
+  width: 150px;
+  margin: 0 auto;
+}
+
+
+/* user show */
+
+.user-panel {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+}

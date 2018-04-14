@@ -21,4 +21,8 @@ class User < ApplicationRecord
   has_many :inverse_friendships, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
   has_many :applyers, -> { where(friendships: {status: "applying"})}, through: :inverse_friendships, source: :user
   has_many :applyer_friends, -> { where(friendships: {status: "friend"})}, through: :inverse_friendships, source: :user
+
+  def is_admin?
+    self.role == "admin"
+  end
 end

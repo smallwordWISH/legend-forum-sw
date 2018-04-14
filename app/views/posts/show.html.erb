@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="post-title">
+    <h3><%= @post.title %></h3>
+  </div>
+  <div class="post-panel">
+    <div class="post-user-item">
+      <div class="avatar-sm">
+        <%= link_to user_path(@post.user) do %>
+          <%= image_tag(@post.user.avatar) %>
+        <% end %>
+      </div>
+      <div>
+        <%= @post.user.name %>
+      </div>
+    </div>
+    <div class="post-content-item">
+      <div>
+        <% if @post.picture.present? %>
+          <%= image_tag(@post.picture) %>
+        <% end %>
+        <%= @post.content %>
+      </div>
+    </div>
+    <div class="edit-delete-group">
+      <% if @post.user == current_user %>
+        <%= link_to 'edit', edit_post_path(@post) %>
+        <%= link_to 'delete', post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
+      <% end %>
+    </div>
+  </div>
+  <% if @post.replies.present? %>
+    <% @post.replies.each do |reply| %>
+      <div class="reply-panel">
+        <div class="reply-user-item">
+          <div class="avatar-sm">
+            <%= link_to user_path(reply.user) do %>
+              <%= image_tag(reply.user.avatar) %>
+            <% end %>
+          </div>
+          <div>
+            <%= reply.user.name %>            
+          </div>
+        </div>
+        <div class="reply-content-item">
+          <div>
+            <%= reply.comment %>
+          </div>
+        </div>
+        <div class="edit-delete-group">
+          <% if reply.user == current_user %>
+            <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <%= form_for [@post, @reply] do |f| %>
+    <div class="reply-form form-group">
+      <div>
+        <%= f.text_area :comment, placeholder: "Reply something...", maxlength: 140, class: "form-control"%>
+      </div>
+      <%= f.submit 'Reply', class: "btn btn-primary pull-right" %>
+    </div> 
+  <% end %>
+</div>
+
+
+
