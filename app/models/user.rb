@@ -10,9 +10,10 @@ class User < ApplicationRecord
   validates_presence_of :name
 
   has_many :posts, dependent: :destroy
-  has_many :replies, through: :posts, dependent: :destroy
+  has_many :replies, dependent: :destroy
 
   has_many :favorites, dependent: :destroy
+  has_many :favorited_posts, through: :favorites, source: :post
 
   has_many :friendships, dependent: :destroy
   has_many :friends, -> { where(friendships: {status: "friend"})}, through: :friendships

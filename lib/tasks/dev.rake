@@ -52,6 +52,19 @@ namespace :dev do
     puts "have created  #{Reply.count} reply data"
   end
 
+  task fake_favorite: :environment do
+    Favorite.destroy_all
+
+    50.times do
+      Favorite.create(
+        user: User.all.sample,
+        post: Post.all.sample
+      )
+    end
+    puts "have created fake favorites"
+    puts "now you have #{Favorite.count} favorite data"
+  end
+
   # task fake_views: :environment do
   #   View.destroy_all
 

@@ -7,6 +7,6 @@ class Post < ApplicationRecord
 
   has_many :replies, dependent: :destroy
   has_many :views, dependent: :destroy
-  has_many :favorites, dependent: :destroy
+  # has_many :favorites, dependent: :destroy
 
 end

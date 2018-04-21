@@ -1,0 +1,9 @@
+<% if current_user.favorited_posts.include?(post) %>
+  <%= link_to favorite_path(post), method: :delete, remote: true do %>
+    <button class="btn btn-info btn-sm">Collected</button>
+  <% end %>
+<% else %>
+  <%= link_to favorites_path(post_id: post), method: :post, remote: true do %>
+    <button class="btn btn-primary btn-sm">Collect</button>
+  <% end %>
+<% end %>

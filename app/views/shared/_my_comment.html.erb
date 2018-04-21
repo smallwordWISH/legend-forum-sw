@@ -16,7 +16,7 @@
       </div>
       <div class="edit-delete-group">
         <% if reply.user == current_user %>
-          <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+          <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
         <% end %>
       </div>
     </div>
