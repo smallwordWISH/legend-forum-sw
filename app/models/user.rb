@@ -26,4 +26,28 @@ class User < ApplicationRecord
   def is_admin?
     self.role == "admin"
   end
+
+  def is_friend?(user)
+    if self.friends.include?(user) or self.applyer_friends.include?(user)
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_be_applying?(user)
+    if self.applyers.include?(user)
+      return true
+    else
+      return false
+    end
+  end
+
+  def is_applying?(user)
+    if self.send_applies.include?(user)
+      return true
+    else
+      return false
+    end
+  end
 end

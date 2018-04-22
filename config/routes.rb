@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :favorites, only: [:index, :create, :destroy]
+  resources :favorites, only: [:create, :destroy]
 
   resources :friendships, only: [:index, :create, :update, :destroy]
 

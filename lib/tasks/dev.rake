@@ -78,18 +78,22 @@ namespace :dev do
   #   puts "now you have #{View.count} View data"
   # end
 
-  # task fake_followship: :environment do
-  #   Followship.destroy_all
+  task fake_friendship: :environment do
+    Friendship.destroy_all
+    
+    User.first(20).each do |i|
+      for j in i.id + 1..20
+        Friendship.create(
+          user_id: i.id,
+          friend_id: j,
+          status: "friend"
+        )
+      end
+    end
 
-  #   50.times do
-  #     Followship.create(
-  #       user: User.all.sample,
-  #       following: User.all.sample
-  #     )
-  #   end
-  #   puts "have created fake followships"
-  #   puts "now you have #{Followship.count} followship data"
-  # end
+    puts "have created fake followships"
+    puts "now you have #{Friendship.count} friend data"
+  end
 
   task fake_all: :environment do
     Rake::Task['db:drop'].execute
@@ -98,6 +102,8 @@ namespace :dev do
     Rake::Task['dev:fake_user'].execute
     Rake::Task['dev:fake_post'].execute
     Rake::Task['dev:fake_reply'].execute
+    Rake::Task['dev:fake_favorite'].execute
+    Rake::Task['dev:fake_friendship'].execute
     # Rake::Task['dev:test'].execute
   end
 

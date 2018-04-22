@@ -15,6 +15,9 @@
       <div>
         <%= @post.user.name %>
       </div>
+      <div class="friend-btn">
+        <%= render partial: "shared/friend_btn", locals: {post: @post} %>
+      </div>
     </div>
     <div class="post-content-item">
       <div>
@@ -42,6 +45,9 @@
           </div>
           <div>
             <%= reply.user.name %>            
+          </div>
+          <div class="friend-btn">
+            <%= render partial: "shared/friend_btn", locals: {post: reply} %>
           </div>
         </div>
         <div class="reply-content-item">

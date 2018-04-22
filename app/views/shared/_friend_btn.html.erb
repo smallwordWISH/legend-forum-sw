@@ -1,0 +1,23 @@
+<% if current_user != post.user %>
+  <% if current_user.is_friend?(post.user) %>
+    <h4><span class="label label-primary label-lg glyphicon glyphicon-ok"> Friend</span></h4>
+  <% elsif current_user.is_be_applying?(post.user) %>
+    <div>
+      <%= link_to friendships_path do %>
+        <button class="btn btn-default btn-sm">Go to confirm</button>
+      <% end %>
+    </div>
+  <% elsif current_user.is_applying?(post.user) %>
+    <div>
+      <%= link_to friendship_path(post.user), method: :delete do%>
+        <button class="btn btn-default btn-sm">Cancel applying</button>
+      <% end %>
+    </div>
+  <% else %>
+    <div>
+      <%= link_to friendships_path(friend_id: post.user.id), method: :post do %>
+        <button class="btn btn-default btn-sm glyphicon glyphicon-plus">Add Friend</button>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
