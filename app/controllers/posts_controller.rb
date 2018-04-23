@@ -1,9 +1,27 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_categories, only: [:index, :replies_count, :last_replied_at, :viewed_count]
 
   def index
-    @posts = Post.where(draft: false).includes(:replies).order(created_at: :desc).page(params[:page]).per(20)
-    @categories = Category.all.order(created_at: :asc)
+    @posts = Post.where(draft: false).includes(:replies).page(params[:page]).per(20)
+  end
+
+  def replies_count
+    @posts = Post.where(draft: false).includes(:replies).order(replies_count: :desc).page(params[:page]).per(20)
+
+    render 'index.html.erb'
+  end
+
+  def last_replied_at
+    @posts = Post.where(draft: false).joins(:replies).includes(:replies).order('replies.created_at DESC').page(params[:page]).per(20)
+
+    render 'index.html.erb'
+  end
+
+  def viewed_count
+    @posts = Post.where(draft: false).includes(:replies).order(views_count: :desc).page(params[:page]).per(20)
+
+    render 'index.html.erb'
   end
 
   def new
@@ -72,6 +90,10 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find_by_id(params[:id])
+  end
+
+  def set_categories
+    @categories = Category.all
   end
 
   def post_params

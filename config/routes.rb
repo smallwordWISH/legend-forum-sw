@@ -6,6 +6,12 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :replies, only: [:index, :create, :update, :destroy]
+
+    collection do
+      get :replies_count
+      get :last_replied_at
+      get :viewed_count
+    end
   end
 
   resources :favorites, only: [:create, :destroy]

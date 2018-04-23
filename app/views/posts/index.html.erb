@@ -9,10 +9,10 @@
     <div id="post-table">
       <table class="table table-hover">
         <tr>
-          <th>Replies count</th>
+          <th><%= link_to 'Replies count', replies_count_posts_path %></th>
           <th>Title</th>
-          <th>Last replied at</th>
-          <th>Viewed count</th>
+          <th><%= link_to 'Last replied at', last_replied_at_posts_path %></th>
+          <th><%= link_to 'Viewed count', viewed_count_posts_path %></th>
         </tr>
         <% @posts.each do |post| %>
           <tr>
