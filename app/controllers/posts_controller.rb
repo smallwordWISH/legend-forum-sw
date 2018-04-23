@@ -37,6 +37,11 @@ class PostsController < ApplicationController
   def show
     @reply = Reply.new
     @user = @post.user
+
+    if !current_user.views.where(post_id: params[:id]).present?
+      @view = current_user.views.build(post_id: params[:id])
+      @view.save
+    end
   end
 
   def edit
