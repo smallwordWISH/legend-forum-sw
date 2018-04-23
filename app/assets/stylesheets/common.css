@@ -99,7 +99,8 @@ header nav {
 
 #nav {
   display: grid;
-  grid-template-columns: 130px 100px 1fr;
+  grid-template-columns: repeat(4, auto) 1fr;
+  grid-gap: 20px;
 }
 
 #nav .menu {

@@ -6,12 +6,6 @@ Rails.application.routes.draw do
 
   resources :posts do
     resources :replies, only: [:index, :create, :update, :destroy]
-
-    member do 
-      post :favorite
-      post :unfavorite
-      
-    end
   end
 
   resources :favorites, only: [:create, :destroy]
@@ -29,6 +23,8 @@ Rails.application.routes.draw do
       get :my_friend
     end
   end
+
+  resources :feeds, only: [:index]
 
   namespace :admin do
     resources :categories, except: [:show, :new, :edit]

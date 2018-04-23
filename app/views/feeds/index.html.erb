@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="site-panel">
+    <div>
+      <h1>User</h1>
+      <h2><div class="label label-primary"><%= @users_count %></div></h2>
+    </div>
+    <div>
+      <h1>Post</h1>
+      <h2><div class="label label-primary"><%= @posts_count %></div></h2>
+    </div>
+    <div>
+      <h1>Comment</h1>
+      <h2><div class="label label-primary"><%= @replies_count %></div></h2>
+    </div>    
+  </div>
+  <dir class="rank-panel">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Chatterbox</div>
+      <div class="panel-body">
+        <ol>
+          <% @users.each_with_index do |user, i| %>
+            <li><%= i + 1 %>. <%= link_to user.name, user_path(user) %><span class="badge" ><%= user.replies_count %></span></li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Most Popular Post</div>
+      <div class="panel-body">
+        <ol>
+          <% @posts.each_with_index do |post, i| %>
+            <li><%= i + 1 %>. <%= link_to post.title, post_path(post) %><span class="badge" ><%= post.replies_count %></span></li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+  </dir>
+</div>
