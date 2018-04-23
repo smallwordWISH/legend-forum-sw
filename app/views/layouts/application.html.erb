@@ -11,12 +11,27 @@
     <header>
       <nav>
         <div class="container">
-          <div id="logo">
-            <%= link_to 'Legend Forum', root_path %>
-          </div>
-          <%= link_to 'New Post', new_post_path %>
-          <div id="menu">
-            <li><%= link_to '登出', destroy_user_session_path, method: :delete %></li>
+          <div id="nav">
+            <div class="logo">
+              <%= link_to 'Legend Forum', root_path %>
+            </div>
+            <div>
+              <%= link_to 'New Post', new_post_path %>
+            </div>
+            <div class="menu">
+              <% if current_user.present? %>
+                <li>
+                  <%= current_user.email %>
+                  <% if current_user.role == "admin" %>
+                  (Admin)
+                  <% end %>    
+                </li>
+                <li><%= link_to 'Profile', user_path(current_user) %></li>
+                <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+              <% else %>
+                <li><%= link_to 'Log in', new_user_session_path%></li>
+              <% end %>
+            </div>
           </div>
         </div>
       </nav>

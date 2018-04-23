@@ -36,6 +36,7 @@ class PostsController < ApplicationController
   
   def show
     @reply = Reply.new
+    @user = @post.user
   end
 
   def edit

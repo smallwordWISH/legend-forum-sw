@@ -1,0 +1,3 @@
+var btnHtml = '<%= j render partial: "shared/friend_btn", locals: {user: @friend} %>';
+
+$('#user-<%= @friend.id %> .friend-btn').html(btnHtml);

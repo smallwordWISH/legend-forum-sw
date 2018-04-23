@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 0px;
 }
 
-ul, ol {
+ul, ol, li {
   list-style: none;
   margin: 0px;
   padding: 0px;
@@ -88,16 +88,29 @@ header {
   height: 35px;
 }
 
-#nav {
+header nav {
   font-size: 16px;
   height: 35px;
   width: 100%;
-  background: black;
   position: fixed;
   top: 0;
   z-index: 1000;
 }
 
+#nav {
+  display: grid;
+  grid-template-columns: 130px 100px 1fr;
+}
+
+#nav .menu {
+  justify-self: right;
+  display: flex;
+  text-align: end;
+}
+
+#nav .menu a {
+  padding-left: 20px;
+}
 
 /* flash */
 

@@ -24,3 +24,16 @@
 }
 
 /* my friend */
+
+.my-friend-panel .waiting-panel,
+.my-friend-panel .accept-panel,
+.my-friend-panel .friend-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 20px;
+}
+
+.my-friend-panel h5 {
+  grid-column: 1 / -1;
+  text-align: center;
+}

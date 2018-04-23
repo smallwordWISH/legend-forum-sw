@@ -6,17 +6,17 @@
     </div>
   </div>
   <div class="post-panel">
-    <div class="post-user-item">
+    <div id="user-<%= @user.id %>" class="post-user-item">
       <div class="avatar-sm">
-        <%= link_to user_path(@post.user) do %>
-          <%= image_tag(@post.user.avatar) %>
+        <%= link_to user_path(@user) do %>
+          <%= image_tag(@user.avatar) %>
         <% end %>
       </div>
       <div>
-        <%= @post.user.name %>
+        <%= @user.name %>
       </div>
       <div class="friend-btn">
-        <%= render partial: "shared/friend_btn", locals: {post: @post} %>
+        <%= render partial: "shared/friend_btn", locals: {user: @user} %>
       </div>
     </div>
     <div class="post-content-item">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="edit-delete-group">
-      <% if @post.user == current_user %>
+      <% if @user == current_user %>
         <%= link_to 'edit', edit_post_path(@post) %>
         <%= link_to 'delete', post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
       <% end %>
@@ -37,7 +37,7 @@
   <% if @post.replies.present? %>
     <% @post.replies.each do |reply| %>
       <div class="reply-panel">
-        <div class="reply-user-item">
+        <div id="user-<%= reply.user.id %>" class="reply-user-item">
           <div class="avatar-sm">
             <%= link_to user_path(reply.user) do %>
               <%= image_tag(reply.user.avatar) %>
@@ -47,7 +47,7 @@
             <%= reply.user.name %>            
           </div>
           <div class="friend-btn">
-            <%= render partial: "shared/friend_btn", locals: {post: reply} %>
+            <%= render partial: "shared/friend_btn", locals: {user: reply.user} %>
           </div>
         </div>
         <div class="reply-content-item">
