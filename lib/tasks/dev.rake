@@ -27,7 +27,6 @@ namespace :dev do
   
     30.times do |i|
       Post.create!(
-        category: Category.all.sample,
         title: FFaker::Lorem.sentence,
         content: FFaker::Lorem.paragraph,
         user: User.all.sample,
@@ -35,8 +34,27 @@ namespace :dev do
       )
     end
 
+    Post.all.each do |post|
+      post.categories << Category.all.sample(3)
+    end
+
     puts "have created #{Post.count} post data"
   end
+
+  # task fake_categories_posts: :environment do
+  #   CategoriesPosts.destroy_all
+
+  #   Post.all.each do |post|
+  #     for i in 1..rand(1..4)
+  #       CategoriesPosts.create!(
+  #         post: post,
+  #         category: Category.all.sample
+  #       )
+  #     end
+  #   end
+
+  #   puts "have created #{Categoryship.count} categoryship data" 
+  # end
 
   task fake_reply: :environment do
     Reply.destroy_all
@@ -101,6 +119,7 @@ namespace :dev do
     Rake::Task['db:seed'].execute
     Rake::Task['dev:fake_user'].execute
     Rake::Task['dev:fake_post'].execute
+    # Rake::Task['dev:fake_categories_posts'].execute
     Rake::Task['dev:fake_reply'].execute
     Rake::Task['dev:fake_favorite'].execute
     Rake::Task['dev:fake_friendship'].execute
