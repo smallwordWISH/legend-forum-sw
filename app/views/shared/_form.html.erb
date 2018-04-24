@@ -11,14 +11,14 @@
         <%= image_tag post.picture, width: '300px' if post.picture? %>
         <%= f.file_field :picture %>
         <label> Who can see </label>
-        <%= f.radio_button :authority, 'all' %>
+        <%= f.radio_button :authority, 'all', checked: true %>
         <%= f.label :authority, 'All' %>
         <%= f.radio_button :authority, 'friend' %>
         <%= f.label :authority, 'Friend' %>
         <%= f.radio_button :authority, 'myself' %>
         <%= f.label :authority, 'Myself' %>
         <%= f.label :category, 'Category' %>
-        <%= f.collection_select :category_id, Category.all, :id, :name, prompt: 'Please select category' %>
+        <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
       <% if post.draft == false && post.title.present? %>
         <%= f.submit 'Update' %> 
       <% else %>
@@ -27,6 +27,5 @@
       <% end %>
       </div> 
     </div>
-
   <% end %>
 </div>
