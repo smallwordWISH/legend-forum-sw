@@ -30,7 +30,7 @@
           <tr>
             <td><%= post.replies_count %></td>
             <td>
-              <%= link_to post.title, post_path(post) %>
+              <%= link_to post.title, post_path(post) %> (<%= post.authority %>)
             </td>
             <td>
               <% if post.replies.present? %>

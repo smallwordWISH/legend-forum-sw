@@ -1,6 +1,6 @@
 <div class="container">
   <div class="post-title">
-    <h1><%= @post.title %></h1>
+    <h1><%= @post.title %> (<%= @post.authority %>)</h1>
     <div class="collect-btn">
       <%= render partial: "shared/favorite_btn", locals: {post: @post} %>
     </div>

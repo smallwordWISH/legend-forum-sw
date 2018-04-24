@@ -24,13 +24,14 @@ namespace :dev do
 
   task fake_post: :environment do 
     Post.destroy_all
-  
-    30.times do |i|
+    authority_list = ["all", "friend", "myself"]
+
+    300.times do |i|
       Post.create!(
         title: FFaker::Lorem.sentence,
         content: FFaker::Lorem.paragraph,
         user: User.all.sample,
-        authority: "all"
+        authority: authority_list.sample
       )
     end
 

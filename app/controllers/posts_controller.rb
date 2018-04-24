@@ -5,36 +5,45 @@ class PostsController < ApplicationController
 
   def index
     if params[:category_id].present?
-      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).page(params[:page]).per(20)
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]})
     else
-      @posts = Post.includes(:replies).where(draft: false).page(params[:page]).per(20)
+      @posts = Post.includes(:replies).where(draft: false)
     end
+
+    set_who_can_see_posts
   end
 
   def replies_count
     if params[:category_id].present?
-      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order(replies_count: :desc).page(params[:page]).per(20)
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order(replies_count: :desc)
     else
-      @posts = Post.includes(:replies).where(draft: false).order(replies_count: :desc).page(params[:page]).per(20)
+      @posts = Post.includes(:replies).where(draft: false).order(replies_count: :desc)
     end
+
+    set_who_can_see_posts
+
     render 'index.html.erb'
   end
 
   def last_replied_at
     if params[:category_id].present?
-      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC').page(params[:page]).per(20)
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC')
     else
-      @posts = Post.includes(:replies).where(draft: false).order('replies.created_at DESC').page(params[:page]).per(20)
+      @posts = Post.includes(:replies).where(draft: false).order('replies.created_at DESC')
     end
+    set_who_can_see_posts
+
     render 'index.html.erb'
   end
 
   def viewed_count
     if params[:category_id].present?
-      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order(views_count: :desc).page(params[:page]).per(20)
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order(views_count: :desc)
     else
-      @posts = Post.includes(:replies).where(draft: false).order(views_count: :desc).page(params[:page]).per(20)
+      @posts = Post.includes(:replies).where(draft: false).order(views_count: :desc)
     end
+    set_who_can_see_posts
+
     render 'index.html.erb'
   end
 
@@ -105,6 +114,21 @@ class PostsController < ApplicationController
 
   def set_post
     @post = Post.find_by_id(params[:id])
+  end
+
+  def set_who_can_see_posts
+    @posts.each do |post|
+      if post.authority == 'friend'
+        if !(current_user.is_friend?(post.user))
+          @posts = @posts.includes(:user).where.not(id: post.id)
+        end
+      elsif post.authority == 'myself'
+        if !(current_user == post.user)
+          @posts = @posts.includes(:user).where.not(id: post.id)
+        end
+      end
+    end
+    @posts = @posts.page(params[:page]).per(20)
   end
 
   def set_categories
