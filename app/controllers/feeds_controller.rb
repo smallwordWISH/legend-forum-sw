@@ -1,5 +1,4 @@
 class FeedsController < ApplicationController
-
   def index
     @users_count = User.all.count
     @posts_count = Post.all.count

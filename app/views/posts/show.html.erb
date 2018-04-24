@@ -30,13 +30,15 @@
     <div class="edit-delete-group">
       <% if @user == current_user %>
         <%= link_to 'edit', edit_post_path(@post) %>
+      <% end %>
+      <% if @user == current_user or current_user.role == 'admin'  %>
         <%= link_to 'delete', post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
       <% end %>
     </div>
   </div>
-  <% if @post.replies.present? %>
-    <% @post.replies.each do |reply| %>
-      <div class="reply-panel">
+  <% if @replies.present? %>
+    <% @replies.each do |reply| %>
+      <div id="reply-<%= reply.id %>" class="reply-panel">
         <div id="user-<%= reply.user.id %>" class="reply-user-item">
           <div class="avatar-sm">
             <%= link_to user_path(reply.user) do %>
@@ -51,12 +53,24 @@
           </div>
         </div>
         <div class="reply-content-item">
-          <div>
-            <%= reply.comment %>
-          </div>
+          <%= render partial: "shared/reply_comment", locals: {reply: reply} %>
+        </div>
+        <div class="reply-edit-form">
+          <%= form_for [@post, reply], remote: true do |f| %>
+            <div class="form-group">
+              <div>
+                <%= f.text_area :comment, maxlength: 140, class: "form-control"%>
+              </div>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm reply-cancel-btn">Cancel</button>
+            <%= f.submit 'Update', remote: true, class: "tweet-btn btn btn-primary btn-sm" %> 
+          <% end %>
         </div>
         <div class="edit-delete-group">
           <% if reply.user == current_user %>
+            <button class="btn btn-primary btn-sm reply-edit-btn">edit</button>
+          <% end %>
+          <% if reply.user == current_user or current_user.role == 'admin' %>
             <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
           <% end %>
         </div>
@@ -71,6 +85,9 @@
       <%= f.submit 'Reply', class: "btn btn-primary pull-right" %>
     </div> 
   <% end %>
+  <div class="paginate">
+    <%= paginate @replies %>
+  </div>
 </div>
 
 

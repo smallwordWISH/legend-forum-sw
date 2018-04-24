@@ -1,0 +1,6 @@
+var html = '<%= j render partial: "shared/reply_comment", locals: {reply: @reply} %>';
+
+$('#reply-<%= @reply.id %> .reply-content-item').html(html);
+$('#reply-<%= @reply.id %> .reply-content-item').show();
+$('#reply-<%= @reply.id %> .reply-edit-form').hide();
+$('#reply-<%= @reply.id %> .edit-delete-group').show();

@@ -41,7 +41,7 @@ namespace :dev do
   task fake_reply: :environment do
     Reply.destroy_all
 
-    50.times do
+    500.times do
       Reply.create!(
         comment: FFaker::Lorem.sentence,
         post: Post.all.sample,

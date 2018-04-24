@@ -14,16 +14,13 @@ class RepliesController < ApplicationController
     redirect_to post_path(@post)
   end
 
-  def edit
-  end
-
   def update
     @reply.update(reply_params)
     if !@reply.update(reply_params)
       flash[:alert] = "Reply was failed to update. #{@reply.errors.full_messages.to_sentence}"
       redirect_back(fallback_location: root_path)
     end
-    redirect_to post_path(@post)
+    # redirect_to post_path(@post)
   end
 
   def destroy

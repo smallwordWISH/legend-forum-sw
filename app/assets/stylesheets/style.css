@@ -16,6 +16,12 @@
 }
 
 
+/* reply */
+
+.reply-edit-form {
+  display: none;
+}
+
 /* user show */
 
 .user-profile-panel {
