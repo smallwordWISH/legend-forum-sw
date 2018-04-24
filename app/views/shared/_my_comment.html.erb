@@ -9,18 +9,42 @@
 </ul>
 <div class="my-comment-panel">
   <% user.replies.each do |reply| %>
-    <div class="my-comment-item">
-      <div class="my-comment-content">
-        <%= link_to reply.post.title, post_path(reply.post) %>
-        <div>
-          <%= reply.comment %>
+    <% if current_user != user %>
+      <% if reply.post.authority == 'friend' && !current_user.is_friend?(user) %>
+      <% elsif reply.post.authority == 'myself' %>
+      <% else %>
+        <div class="my-comment-item">
+          <div class="my-comment-content">
+            <div>
+              <%= link_to reply.post.title, post_path(reply.post) %> (<%= reply.post.authority %>)
+            </div>
+            <div>
+              <%= reply.comment %>
+            </div>
+          </div>
+          <div class="edit-delete-group">
+            <% if reply.user == current_user %>
+              <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="my-comment-item">
+        <div class="my-comment-content">
+          <div>
+            <%= link_to reply.post.title, post_path(reply.post) %> (<%= reply.post.authority %>)
+          </div>
+          <div>
+            <%= reply.comment %>
+          </div>
+        </div>
+        <div class="edit-delete-group">
+          <% if reply.user == current_user %>
+            <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+          <% end %>
         </div>
       </div>
-      <div class="edit-delete-group">
-        <% if reply.user == current_user %>
-          <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
-        <% end %>
-      </div>
-    </div>
+    <% end %>
   <% end %>  
 </div>

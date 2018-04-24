@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :confirm_user, only: [:edit, :update, :destroy]
   before_action :set_categories, only: [:index, :replies_count, :last_replied_at, :viewed_count]
   before_action :set_category, only: [:index, :replies_count, :last_replied_at, :viewed_count]
 
@@ -76,6 +77,14 @@ class PostsController < ApplicationController
   end
   
   def show
+      if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
+        flash[:alert] = "You are not authorized."
+        redirect_back(fallback_location: root_path)
+      elsif @post.authority == 'myself' && !(current_user == @post.user)
+        flash[:alert] = "You are not authorized."
+        redirect_back(fallback_location: root_path)
+      end
+
     @reply = Reply.new
     @replies = @post.replies.page(params[:page]).per(20)
     @user = @post.user
@@ -143,5 +152,12 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :content, :picture, :authority, :category_ids => [])
+  end
+
+  def confirm_user
+    if @post.user != current_user
+      flash[:alert] = "You are not authorized."
+      redirect_back(fallback_location: root_path)
+    end
   end
 end

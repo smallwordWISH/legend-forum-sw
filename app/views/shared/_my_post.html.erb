@@ -11,21 +11,43 @@
   <table class="table table-hover">
     <% user.posts.each do |post| %>
       <% if post.draft == false %>
-        <tr>
-          <td><%= link_to post.title, post_path(post) %></td>
-          <td>
-            <%= post.draft ? 'Draft' : 'Published' %>
-          </td>
-          <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-          <td>
-            <div class="edit-delete-group">
-              <% if post.user == current_user %>
-                <%= link_to 'edit', edit_post_path(post) %>
-                <%= link_to 'delete', post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
-              <% end %>
-            </div>
-          </td>
-        </tr>
+        <% if current_user != user %>
+          <% if post.authority == 'friend' && !current_user.is_friend?(user) %>
+          <% elsif post.authority == 'myself' %>
+          <% else %>  
+            <tr>
+              <td><%= link_to post.title, post_path(post) %> (<%= post.authority %>)</td>
+              <td>
+                <%= post.draft ? 'Draft' : 'Published' %>
+              </td>
+              <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td>
+                <div class="edit-delete-group">
+                  <% if post.user == current_user %>
+                    <%= link_to 'edit', edit_post_path(post) %>
+                    <%= link_to 'delete', post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end%>
+        <% else %>
+          <tr>
+            <td><%= link_to post.title, post_path(post) %> (<%= post.authority %>)</td>
+            <td>
+              <%= post.draft ? 'Draft' : 'Published' %>
+            </td>
+            <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td>
+              <div class="edit-delete-group">
+                <% if post.user == current_user %>
+                  <%= link_to 'edit', edit_post_path(post) %>
+                  <%= link_to 'delete', post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </table>

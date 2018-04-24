@@ -1,6 +1,7 @@
 class RepliesController < ApplicationController
   before_action :set_post, only: [:create, :update, :destroy]
   before_action :set_reply, except: [:create]
+  before_action :confirm_user, only: [:update, :destroy]
 
   def create
     @reply = @post.replies.build(reply_params)
@@ -20,7 +21,6 @@ class RepliesController < ApplicationController
       flash[:alert] = "Reply was failed to update. #{@reply.errors.full_messages.to_sentence}"
       redirect_back(fallback_location: root_path)
     end
-    # redirect_to post_path(@post)
   end
 
   def destroy
@@ -51,6 +51,13 @@ class RepliesController < ApplicationController
     @reply = Reply.find_by_id(params[:id])
     if !@reply 
       redirect_to(root_path)
+    end
+  end
+
+  def confirm_user
+    if @reply.user != current_user
+      flash[:alert] = "You are not authorized."
+      redirect_back(fallback_location: root_path)
     end
   end
 
