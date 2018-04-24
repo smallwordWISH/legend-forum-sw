@@ -1,26 +1,40 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :set_categories, only: [:index, :replies_count, :last_replied_at, :viewed_count]
+  before_action :set_category, only: [:index, :replies_count, :last_replied_at, :viewed_count]
 
   def index
-    @posts = Post.where(draft: false).includes(:replies).page(params[:page]).per(20)
+    if params[:category_id].present?
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).page(params[:page]).per(20)
+    else
+      @posts = Post.includes(:replies).where(draft: false).page(params[:page]).per(20)
+    end
   end
 
   def replies_count
-    @posts = Post.where(draft: false).includes(:replies).order(replies_count: :desc).page(params[:page]).per(20)
-
+    if params[:category_id].present?
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order(replies_count: :desc).page(params[:page]).per(20)
+    else
+      @posts = Post.includes(:replies).where(draft: false).order(replies_count: :desc).page(params[:page]).per(20)
+    end
     render 'index.html.erb'
   end
 
   def last_replied_at
-    @posts = Post.where(draft: false).joins(:replies).includes(:replies).order('replies.created_at DESC').page(params[:page]).per(20)
-
+    if params[:category_id].present?
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC').page(params[:page]).per(20)
+    else
+      @posts = Post.includes(:replies).where(draft: false).order('replies.created_at DESC').page(params[:page]).per(20)
+    end
     render 'index.html.erb'
   end
 
   def viewed_count
-    @posts = Post.where(draft: false).includes(:replies).order(views_count: :desc).page(params[:page]).per(20)
-
+    if params[:category_id].present?
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order(views_count: :desc).page(params[:page]).per(20)
+    else
+      @posts = Post.includes(:replies).where(draft: false).order(views_count: :desc).page(params[:page]).per(20)
+    end
     render 'index.html.erb'
   end
 
@@ -95,6 +109,12 @@ class PostsController < ApplicationController
 
   def set_categories
     @categories = Category.all
+  end
+
+  def set_category
+    if params[:category_id].present?
+      @category = Category.find_by_id(params[:category_id])
+    end
   end
 
   def post_params
