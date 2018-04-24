@@ -24,18 +24,13 @@ class RepliesController < ApplicationController
   end
 
   def destroy
-    if @reply.user == current_user
-      @reply.destroy
-      if @reply.present?
-        flash[:notice] = "Reply was successfully deleted."
-      else
-        flash[:alert] = "Reply does not exist."
-      end
-      redirect_to post_path(@post)
+    @reply.destroy
+    if @reply.present?
+      flash[:notice] = "Reply was successfully deleted."
     else
-      flash[:alert] = "You are not authorized."
-      redirect_to post_path(@post)
+      flash[:alert] = "Reply does not exist."
     end
+    redirect_back(fallback_location: root_path)
   end
 
   private

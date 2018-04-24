@@ -19,19 +19,19 @@
 
 $(document).on('turbolinks:load', function() {
 
-  $('.reply-panel .edit-delete-group .reply-edit-btn').on('click', function() {
+  $('.container').on('click', '.reply-panel .edit-delete-group .reply-edit-btn', function() {
     $(this).parent('.edit-delete-group').siblings('.reply-content-item').hide();
     $(this).parent('.edit-delete-group').siblings('.reply-edit-form').show();
     $(this).parent('.edit-delete-group').hide();
   });
 
-  $('.reply-panel .reply-edit-form .reply-cancel-btn').on('click', function() {
+  $('.container').on('click', '.reply-panel .reply-edit-form .reply-cancel-btn', function() {
     $(this).parents('.reply-edit-form ').siblings('.reply-content-item').show();
     $(this).parents('.reply-edit-form').siblings('.edit-delete-group').show();
     $(this).parents('.reply-edit-form').hide();
   });
 
-  $('.reply-edit-form textarea').keyup(function(){
+  $('.container').on('keyup', '.reply-edit-form textarea', function(){
     var textarea = $(this).val();
     if (textarea.length == 0) {
       $(this).parents('.reply-edit-form').find('.btn-primary').attr('disabled', true);

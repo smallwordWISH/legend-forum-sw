@@ -23,26 +23,31 @@
             </div>
           </div>
           <div class="edit-delete-group">
-            <% if reply.user == current_user %>
-              <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
-            <% end %>
           </div>
         </div>
       <% end %>
     <% else %>
-      <div class="my-comment-item">
-        <div class="my-comment-content">
-          <div>
-            <%= link_to reply.post.title, post_path(reply.post) %> (<%= reply.post.authority %>)
-          </div>
-          <div>
-            <%= reply.comment %>
-          </div>
+      <div id="reply-<%= reply.id %>" class="reply-panel">
+        <div>
+          <%= link_to reply.post.title, post_path(reply.post) %> (<%= reply.post.authority %>)
         </div>
-        <div class="edit-delete-group">
-          <% if reply.user == current_user %>
-            <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+        <div class="reply-content-item">
+          <%= render partial: "shared/reply_comment", locals: {reply: reply} %>
+        </div>
+        <div class="reply-edit-form">
+          <%= form_for [reply.post, reply], remote: true do |f| %>
+            <div class="form-group">
+              <div>
+                <%= f.text_area :comment, maxlength: 140, class: "form-control"%>
+              </div>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm reply-cancel-btn">Cancel</button>
+            <%= f.submit 'Update', remote: true, class: "btn btn-primary btn-sm" %> 
           <% end %>
+        </div>
+        <div class="edit-delete-group">  
+            <button class="btn btn-primary btn-sm reply-edit-btn">edit</button>
+            <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
         </div>
       </div>
     <% end %>
