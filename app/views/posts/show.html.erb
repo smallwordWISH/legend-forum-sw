@@ -1,9 +1,10 @@
 <div class="container">
   <div class="post-title">
-    <h1><%= @post.title %> (<%= @post.authority %>)</h1>
-    <div class="collect-btn">
-      <%= render partial: "shared/favorite_btn", locals: {post: @post} %>
-    </div>
+    <h1><%= @post.title %> <%= render partial: "shared/post_authority", locals: {post: @post} %>
+      <div class="collect-btn pull-right">
+        <%= render partial: "shared/favorite_btn", locals: {post: @post} %>
+      </div>
+    </h1> 
   </div>
   <div class="post-panel">
     <div id="user-<%= @user.id %>" class="post-user-item">
@@ -29,10 +30,14 @@
     </div>
     <div class="edit-delete-group">
       <% if @user == current_user %>
-        <%= link_to 'edit', edit_post_path(@post) %>
+        <%= link_to edit_post_path(@post) do %>
+          <button class="btn btn-primary btn-sm">Edit</button>
+        <% end %>
       <% end %>
       <% if @user == current_user or current_user.role == 'admin'  %>
-        <%= link_to 'delete', post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} %>
+        <%= link_to post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
+          <button class="btn btn-danger btn-sm">Delete</button>
+        <% end %>
       <% end %>
     </div>
   </div>
@@ -71,20 +76,24 @@
             <button class="btn btn-primary btn-sm reply-edit-btn">edit</button>
           <% end %>
           <% if reply.user == current_user or current_user.role == 'admin' %>
-            <%= link_to 'delete', post_reply_path(@post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+            <%= link_to post_reply_path(@post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} do %>
+              <button class="btn btn-danger btn-sm">Delete</button>
+            <% end %>
           <% end %>
         </div>
       </div>
     <% end %>
   <% end %>
-  <%= form_for [@post, @reply] do |f| %>
-    <div class="reply-form form-group">
-      <div>
-        <%= f.text_area :comment, placeholder: "Reply something...", maxlength: 140, class: "form-control"%>
-      </div>
-      <%= f.submit 'Reply', class: "btn btn-primary pull-right" %>
-    </div> 
-  <% end %>
+  <div class="reply-form-panel">
+    <%= form_for [@post, @reply] do |f| %>
+      <div class="reply-form form-group">
+        <div>
+          <%= f.text_area :comment, placeholder: "Reply something...", maxlength: 140, class: "form-control"%>
+        </div>
+        <%= f.submit 'Reply', class: "btn btn-primary pull-right" %>
+      </div> 
+    <% end %>
+  </div>  
   <div class="paginate">
     <%= paginate @replies %>
   </div>

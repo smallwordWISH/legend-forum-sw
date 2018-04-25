@@ -77,6 +77,7 @@ class PostsController < ApplicationController
   end
   
   def show
+    if !(@post.user == current_user)
       if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
         flash[:alert] = "You are not authorized."
         redirect_back(fallback_location: root_path)
@@ -84,6 +85,7 @@ class PostsController < ApplicationController
         flash[:alert] = "You are not authorized."
         redirect_back(fallback_location: root_path)
       end
+    end
 
     @reply = Reply.new
     @replies = @post.replies.page(params[:page]).per(20)

@@ -54,6 +54,11 @@ button[disabled] {
   pointer-events: none;
 }
 
+textarea {
+  resize: none;
+  margin-bottom: 10px;
+}
+
 .clearfix::after {
   content: '';
   display: table;
@@ -63,8 +68,9 @@ button[disabled] {
 /* common setting */
 
 :root {
-  --gray: #808080;
+  --bgblack: #111;
   --lblack: #3C3C3C;
+  --gray: #808080;
   --dwhite: #D4D4D4;
   --info: #5bc0de;
   --brown: #282321;
@@ -169,7 +175,6 @@ header nav {
 
 .alert-row {
   width: 100%;
-  margin-bottom: 30px;
 }
 
 /* sign up, sign in */

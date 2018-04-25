@@ -1,6 +1,6 @@
 <% if current_user != user %>
   <% if current_user.is_friend?(user) %>
-    <h4><span class="label label-primary label-lg glyphicon glyphicon-ok"> Friend</span></h4>
+    <h4><span class="label label-primary label-lg glyphicon glyphicon-ok" style="padding: 5px 10px 8px 10px"> Friend</span></h4>
   <% elsif current_user.is_be_applying?(user) %>
     <div>
       <%= link_to friendships_path do %>
@@ -16,7 +16,7 @@
   <% else %>
     <div>
       <%= link_to friendships_path(friend_id: user.id), method: :post, remote: true do %>
-        <button class="btn btn-default btn-sm glyphicon glyphicon-plus">Add Friend</button>
+        <button class="btn btn-default btn-sm glyphicon glyphicon-plus"> Add Friend</button>
       <% end %>
     </div>
   <% end %>
