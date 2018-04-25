@@ -34,6 +34,13 @@ class Admin::CategoriesController < Admin::AdminController
   end
 
   def destroy
+
+    if @category.posts.present?
+      flash[:alert] = "Can not delete the category with posts."
+      redirect_to admin_root_path
+      return
+    end
+
     @category.destroy
 
     if @category.present?
