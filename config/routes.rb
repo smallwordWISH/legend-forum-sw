@@ -34,12 +34,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :categories, except: [:show, :new]
-    resources :users, only: :index do
+    resources :users, only: [:index, :update]
 
-      member do
-        post :add_admin
-      end
-    end
     root "categories#index"
   end
 end
