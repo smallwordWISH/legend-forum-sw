@@ -3,14 +3,14 @@
   <div id="posts-panel">
     <div id="categories-panel">
       <ul class="nav nav-pills">
-        <li role="presentation" class="active"><%= link_to 'All', root_path %></li>
+        <li class="<%= "active" if !@category.present? %>"><%= link_to 'All', root_path %></li>
         <% @categories.each do |category| %>
-          <li role="presentation"><%= link_to category.name, posts_path(category_id: category.id) %></a></li>
+          <li class="<%= "active" if category == @category %>"><%= link_to category.name, posts_path(category_id: category.id) %></a></li>
         <% end %>
       </ul>
     </div>
     <div id="post-table">
-      <table class="table table-hover">
+      <table class="table table-striped table-hover table-borderless">
         <% if @category.present? %>
           <tr>
             <th><%= link_to 'Replies count', replies_count_posts_path(category_id: @category.id) %></th>
@@ -28,9 +28,9 @@
         <% end %>
         <% @posts.each do |post| %>
           <tr>
-            <td><%= post.replies_count %></td>
-            <td>
-              <%= link_to post.title, post_path(post) %> (<%= post.authority %>)
+            <td><span class="badge"><%= post.replies_count %></span></td>
+            <td style="text-align: start">
+              <%= link_to post.title, post_path(post) %> <%= render partial: "shared/post_authority", locals: {post: post} %>
             </td>
             <td>
               <% if post.replies.present? %>
@@ -39,7 +39,7 @@
                 -
               <% end %>
             </td>
-            <td><%= post.views_count %></td>
+            <td><i class="fa fa-eye"></i> &nbsp;&nbsp;<%= post.views_count %></td>
           </tr>
         <% end %>
       </table>

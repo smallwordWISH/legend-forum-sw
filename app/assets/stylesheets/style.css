@@ -14,7 +14,21 @@
   width: 150px;
   margin: 0 auto;
 }
+/* post index*/
 
+.nav-pills {
+  margin: 20px 0;
+}
+
+#post-table .badge {
+  background-color: var(--info);
+  color: #000;
+  border-radius: 5px;
+}
+
+.post-authority {
+  color: var(--gray);
+}
 /* reply */
 
 .reply-edit-form {
