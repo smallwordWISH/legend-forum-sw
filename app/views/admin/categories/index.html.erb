@@ -1,1 +1,32 @@
-這是後台
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><%= link_to 'Category List', admin_categories_path %></li>
+    <li role="presentation"><%= link_to 'User List', admin_users_path %></li>
+  </ul>
+  <div>
+    <%= render partial: "admin/shared/admin_category_form", locals: {category: @category} %>
+  </div>
+  <div>
+    <table class="table table-bordered">
+      <tr>
+        <th>Name</th>
+        <th>Method</th>
+      </tr>
+      <% @categories.each do |category| %>
+        <tr>
+          <td id="category-<%= category.id %>"><%= category.name %></td>
+          <td>
+            <div class="edit-delete-group">
+              <%= link_to edit_admin_category_path(category), remote: true do %>
+                <button class="btn btn-primary btn-sm">Edit</button>
+              <% end %>
+              <%= link_to admin_category_path(category), method: :delete, data: {confirm: "Are you sure to delete this category?"} do %>
+                <button class="btn btn-danger btn-sm">Delete</button>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>  
+  </div>
+</div>

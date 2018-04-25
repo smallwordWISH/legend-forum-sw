@@ -1,0 +1,8 @@
+<%= form_for [:admin, category] do |f| %>
+  <div class="form-group">
+    <div>
+      <%= f.text_field :name, maxlength: 30, prompt: "Category Name", class: "form-control" %>
+    </div>
+    <%= f.submit class: "btn btn-primary btn-sm" %>
+  </div>
+<% end %>

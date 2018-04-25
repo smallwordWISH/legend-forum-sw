@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   resources :feeds, only: [:index]
 
   namespace :admin do
-    resources :categories, except: [:show, :new, :edit]
+    resources :categories, except: [:show, :new]
     resources :users, only: :index do
 
       member do

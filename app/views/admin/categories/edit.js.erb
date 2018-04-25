@@ -1,0 +1,3 @@
+var html = '<%= j render partial: "admin/shared/admin_category_form", locals: {category: @category} %>'
+
+$('#category-<%= @category.id %>').html(html);

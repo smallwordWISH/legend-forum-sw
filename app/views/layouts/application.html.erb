@@ -29,7 +29,7 @@
                 <li>
                   <%= current_user.email %>
                   <% if current_user.role == "admin" %>
-                  (Admin)
+                    <%= link_to '(Admin)', admin_categories_path %>
                   <% end %>    
                 </li>
                 <li><%= link_to 'Profile', user_path(current_user) %></li>
