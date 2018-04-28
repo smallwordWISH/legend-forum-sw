@@ -23,7 +23,9 @@
     <div class="post-content-item">
       <div>
         <% if @post.picture.present? %>
+        <div class="post-img">
           <%= image_tag(@post.picture) %>
+        </div>
         <% end %>
         <%= @post.content %>
       </div>

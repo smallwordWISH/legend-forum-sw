@@ -40,6 +40,12 @@
   margin: 0 auto;
 }
 
+.post-content-item .post-img img {
+  max-width: 50%;
+  max-height: 300px;
+  object-fit: cover;
+}
+
 .reply-panel {
   background-color: var(--brown);
   border-bottom: 2px solid var(--bgblack);
@@ -54,6 +60,31 @@
   margin-top: 5px;
 }
 
+/* post new */
+
+.post-form {
+  margin-top: 20px;
+}
+
+.post-form input {
+  margin-bottom: 10px;
+}
+
+.post-form-choice {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: 10px 0;
+  margin-bottom: 20px;
+}
+
+.post-form-choice .checkbox-panel label {
+  margin-right: 10px;
+}
+
+.post-form-choice .checkbox-panel input {
+  margin-right: 5px;
+}
 
 /* reply */
 

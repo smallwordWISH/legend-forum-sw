@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :replies_count, :last_replied_at, :viewed_count]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :confirm_user, only: [:edit, :update, :destroy]
   before_action :set_categories, only: [:index, :replies_count, :last_replied_at, :viewed_count]

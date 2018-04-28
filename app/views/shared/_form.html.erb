@@ -5,27 +5,42 @@
         <%= f.text_field :title, placeholder: "Title", required: true, class: "form-control" %>
       </div>
       <div>
-        <%= f.text_area :content, placeholder: "What's on your mind?", required: true, maxlength: 140, class: "tweet-form-textarea form-control" %>
+        <%= f.text_area :content, placeholder: "What's on your mind?", required: true, maxlength: 500, rows: 10, class: "tweet-form-textarea form-control" %>
       </div>
-      <%= f.label :picture, "Picture" %>
-        <%= image_tag post.picture, width: '300px' if post.picture? %>
-        <%= f.file_field :picture %>
-        <label> Who can see </label>
-        <%= f.radio_button :authority, 'all', checked: true %>
-        <%= f.label :authority, 'All' %>
-        <%= f.radio_button :authority, 'friend' %>
-        <%= f.label :authority, 'Friend' %>
-        <%= f.radio_button :authority, 'myself' %>
-        <%= f.label :authority, 'Myself' %>
-        <%= f.label :category, 'Category' %>
-        <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
+      <%= image_tag(post.picture,  {style: "width: 300px"}) if post.picture? %>
+      <div class="post-form-choice">
+        <div><%= f.label :picture, "Picture" %></div>
+        <div><%= f.file_field :picture %></div>
+        <div><label> Who can see </label></div>
+        <div>
+          <div class="radio-inline">
+            <%= f.radio_button :authority, 'all', checked: true %>
+            <%= f.label :authority, 'All' %>
+          </div>
+          <div class="radio-inline">
+            <%= f.radio_button :authority, 'friend' %>
+            <%= f.label :authority, 'Friend' %>
+          </div>
+          <div class="radio-inline">
+            <%= f.radio_button :authority, 'myself' %>
+            <%= f.label :authority, 'Myself' %>          
+          </div>
+          <div>
+            
+         
+          </div>
+        </div>
+        <div><%= f.label :category, 'Category' %></div>
+        <div class="checkbox-panel">          
+          <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name ) %>   
+        </div> 
+      </div>
       <% if post.draft == false && post.title.present? %>
-        <%= f.submit 'Update' %> 
+        <%= f.submit 'Update', class: "btn btn-primary" %> 
       <% else %>
-        <%= f.submit 'Draft' %>
-        <%= f.submit 'Post' %> 
-      <% end %>
-      </div> 
+        <%= f.submit 'Save Draft', class: "btn btn-info" %>
+        <%= f.submit 'Post', class: "btn btn-primary" %> 
+      <% end %>        
     </div>
   <% end %>
 </div>

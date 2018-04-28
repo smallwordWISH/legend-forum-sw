@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Legend Forum</h2>
+  <h1 style="margin-top: 20px">Legend Forum</h1>
   <div id="posts-panel">
     <div id="categories-panel">
       <ul class="nav nav-pills">
@@ -13,17 +13,41 @@
       <table class="table table-striped table-hover table-borderless">
         <% if @category.present? %>
           <tr>
-            <th><%= link_to 'Replies count', replies_count_posts_path(category_id: @category.id) %></th>
+            <th>
+              <%= link_to replies_count_posts_path(category_id: @category.id) do %>
+                Replies count <i class="fa fa-caret-down"></i>
+              <% end %>    
+            </th>
             <th>Title</th>
-            <th><%= link_to 'Last replied at', last_replied_at_posts_path(category_id: @category.id) %></th>
-            <th><%= link_to 'Viewed count', viewed_count_posts_path(category_id: @category.id) %></th>
+            <th>
+              <%= link_to last_replied_at_posts_path(category_id: @category.id) do %>
+                Last replied at <i class="fa fa-caret-down"></i>
+              <% end %>    
+            </th>
+            <th>
+              <%= link_to viewed_count_posts_path(category_id: @category.id) do %>
+                Viewed count <i class="fa fa-caret-down"></i>
+              <% end %>    
+            </th>
           </tr>
         <% else %>
           <tr>
-            <th><%= link_to 'Replies count', replies_count_posts_path %></th>
+            <th>
+              <%= link_to replies_count_posts_path do %>
+                Replies count <i class="fa fa-caret-down"></i>
+              <% end %>    
+            </th>
             <th>Title</th>
-            <th><%= link_to 'Last replied at', last_replied_at_posts_path %></th>
-            <th><%= link_to 'Viewed count', viewed_count_posts_path %></th>
+            <th>
+              <%= link_to last_replied_at_posts_path do %>
+                Last replied at <i class="fa fa-caret-down"></i>
+              <% end %>    
+            </th>
+            <th>
+              <%= link_to viewed_count_posts_path do %>
+                Viewed count <i class="fa fa-caret-down"></i>
+              <% end %>    
+            </th>
           </tr>
         <% end %>
         <% @posts.each do |post| %>
