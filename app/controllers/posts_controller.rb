@@ -57,7 +57,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user = current_user
 
-    if params[:commit] == 'Draft'
+    if params[:commit] == 'Save Draft'
       @post.draft = true
       if @post.save
         flash[:notice] = "Draft was successfully saved."
@@ -78,6 +78,7 @@ class PostsController < ApplicationController
   end
   
   def show
+
     if !(@post.user == current_user)
       if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
         flash[:alert] = "You are not authorized."
@@ -85,6 +86,9 @@ class PostsController < ApplicationController
       elsif @post.authority == 'myself' && !(current_user == @post.user)
         flash[:alert] = "You are not authorized."
         redirect_back(fallback_location: root_path)
+      elsif @post.draft == true
+        flash[:alert] = "You are not authorized."
+        redirect_back(fallback_location: root_path)        
       end
     end
 

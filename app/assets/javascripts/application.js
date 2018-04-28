@@ -39,4 +39,20 @@ $(document).on('turbolinks:load', function() {
       $(this).parents('.reply-edit-form').find('.btn-primary').attr('disabled', false);
     } 
   });
+
+  $(document).on('mouseenter', '.collected-btn', function(){
+    $(this).css({
+      'background': 'var(--danger)',
+      'border-color': 'var(--danger)'
+    });
+    $(this).text('Uncollect');
+  });
+
+   $(document).on('mouseleave', '.collected-btn', function(){
+    $(this).css({
+      'background': 'var(--info)',
+      'border-color': 'var(--info)'
+    });
+    $(this).html('Collected');
+  });
 });

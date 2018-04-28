@@ -73,6 +73,8 @@ textarea {
   --gray: #808080;
   --dwhite: #D4D4D4;
   --info: #5bc0de;
+  --danger: #d9534f;
+  --primary: #337ab7;
   --brown: #282321;
   --lbrown: #3C332E;
 };

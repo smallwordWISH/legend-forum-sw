@@ -6,13 +6,13 @@
   <li role="presentation"><%= link_to 'My Friend', my_friend_user_path(user), remote: true %></li>
 </ul>
 <div class="user my-post-panel">
-  <table class="table table-hover">
+  <table class="table table-striped table-hover table-borderless">
     <% user.posts.each do |post| %>
       <% if !post %>
         <em>There is no draft.</em>
       <% elsif post.draft == true %>
         <tr>
-          <td><%= link_to post.title, post_path(post) %></td>
+          <td style="text-align: start;""><%= link_to post.title, post_path(post), style: "margin-left: 10px"  %> <%= render partial: "shared/post_authority", locals: {post: post} %></td>
           <td>
             <%= post.draft ? 'Draft' : 'Published' %>
           </td>
@@ -20,8 +20,12 @@
           <td>
             <div class="edit-delete-group">
               <% if post.user == current_user %>
-                <%= link_to 'edit', edit_post_path(post) %>
-                <%= link_to 'delete', post_path(post), method: :delete, data: {confirm: "Are you sure to delete this draft?"} %>
+                <%= link_to edit_post_path(post) do %>
+                  <button class="btn btn-primary btn-sm glyphicon glyphicon-pencil"></button>
+                <% end %>
+                <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
+                  <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+                <% end %>
               <% end %>
             </div>            
           </td>

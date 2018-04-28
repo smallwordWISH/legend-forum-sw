@@ -14,22 +14,18 @@
       <% elsif reply.post.authority == 'myself' %>
       <% else %>
         <div class="my-comment-item">
-          <div class="my-comment-content">
-            <div>
-              <%= link_to reply.post.title, post_path(reply.post) %> (<%= reply.post.authority %>)
-            </div>
-            <div>
-              <%= reply.comment %>
-            </div>
+          <div class="my-comment-title">
+            <%= link_to reply.post.title, post_path(reply.post) %> <%= render partial: "shared/post_authority", locals: {post: reply.post} %>
           </div>
-          <div class="edit-delete-group">
+          <div class="my-comment-cotent">
+            <%= reply.comment %>
           </div>
         </div>
       <% end %>
     <% else %>
       <div id="reply-<%= reply.id %>" class="reply-panel">
-        <div>
-          <%= link_to reply.post.title, post_path(reply.post) %> (<%= reply.post.authority %>)
+        <div class="my-comment-title">
+          <%= link_to reply.post.title, post_path(reply.post) %> <%= render partial: "shared/post_authority", locals: {post: reply.post} %>
         </div>
         <div class="reply-content-item">
           <%= render partial: "shared/reply_comment", locals: {reply: reply} %>
@@ -46,8 +42,10 @@
           <% end %>
         </div>
         <div class="edit-delete-group">  
-            <button class="btn btn-primary btn-sm reply-edit-btn">edit</button>
-            <%= link_to 'delete', post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} %>
+            <button class="btn btn-primary btn-sm reply-edit-btn glyphicon glyphicon-pencil"></button>
+            <%= link_to post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} do %>
+              <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+            <% end %>
         </div>
       </div>
     <% end %>

@@ -94,9 +94,50 @@
 
 /* user show */
 
+.nav-tabs a:hover {
+  color: var(--danger);
+}
+
 .user-profile-panel {
   display: grid;
   grid-template-columns: 300px 1fr;
+}
+
+/* my comment */
+
+.my-comment-panel .my-comment-item,
+.my-comment-panel .reply-panel {
+  padding: 10px 20px;
+  background: #000;
+}
+
+.my-comment-panel .my-comment-item:nth-of-type(odd),
+.my-comment-panel .reply-panel:nth-of-type(odd) {
+  background: var(--lbrown);
+}
+
+.my-comment-panel .reply-panel {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+}
+
+.my-comment-panel .reply-panel .my-comment-title {
+  grid-column: 1 / -1;
+}
+
+.my-comment-panel .my-comment-item .my-comment-cotent,
+.my-comment-panel .reply-panel .reply-content-item {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: 1px solid #000;
+  border-radius: 10px;
+  color: #000;
+  background: #FFF;
+}
+
+.my-comment-panel .reply-panel .edit-delete-group {
+  justify-self: center;
+  align-self: center;
 }
 
 /* my friend */
@@ -107,11 +148,17 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: 20px;
+  margin-bottom: 10px;
+  padding: 20px; 
 }
 
-.my-friend-panel h5 {
+.my-friend-panel h4 {
   grid-column: 1 / -1;
   text-align: center;
+}
+
+.my-friend-panel > div:nth-of-type(odd) {
+  background: var(--lbrown);
 }
 
 /* feed */
@@ -143,7 +190,7 @@
 
 .rank-panel .panel-body .panel-body-item {
   display: grid;
-  grid-template-columns: 20px 1fr 20px;
+  grid-template-columns: 20px 1fr 30px;
   grid-row: 1fr;
   grid-gap: 10px;
 }
@@ -152,7 +199,15 @@
   justify-self: end;
 }
 
+.rank-panel .panel-body .panel-body-item div:nth-of-type(3) {
+  justify-self: center;
+} 
+
 .rank-panel .panel-body div, 
 .rank-panel .panel-body a {
   color: #000;
+}
+
+.rank-panel .panel-body a:hover {
+  color: var(--danger);
 }

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="post-title">
     <h1><%= @post.title %> <%= render partial: "shared/post_authority", locals: {post: @post} %>
-      <div class="collect-btn pull-right">
+      <div id="post-<%= @post.id %>" class="collect-btn pull-right">
         <%= render partial: "shared/favorite_btn", locals: {post: @post} %>
       </div>
     </h1> 
