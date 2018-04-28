@@ -17,21 +17,30 @@
     <div class="panel panel-primary">
       <div class="panel-heading">Chatterbox</div>
       <div class="panel-body">
-        <ol>
+        <div class="panel-body-content">
           <% @users.each_with_index do |user, i| %>
-            <li><%= i + 1 %>. <%= link_to user.name, user_path(user) %><span class="badge" ><%= user.replies_count %></span></li>
+          <div class="panel-body-item">
+            <div><%= i + 1 %>. </div>
+            <div><%= link_to user.name, user_path(user) %></div>
+            <div><span class="badge" ><%= user.replies_count %></span></div>
+          </div>
           <% end %>
-        </ol>
+        </div>
       </div>
     </div>
     <div class="panel panel-primary">
       <div class="panel-heading">Most Popular Post</div>
       <div class="panel-body">
-        <ol>
+        <div class="panel-body-content">
           <% @posts.each_with_index do |post, i| %>
-            <li><%= i + 1 %>. <%= link_to post.title, post_path(post) %><span class="badge" ><%= post.replies_count %></span></li>
+            <div class="panel-body-item">
+              <div><%= i + 1 %>.</div> 
+              <div><%= link_to post.title, post_path(post) %>
+              </div>
+              <div><span class="badge"><%= post.replies_count %></span></div>
+            </div>
           <% end %>
-        </ol>
+        </div>
       </div>
     </div>
   </dir>

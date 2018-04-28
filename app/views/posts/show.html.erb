@@ -33,12 +33,12 @@
     <div class="edit-delete-group">
       <% if @user == current_user %>
         <%= link_to edit_post_path(@post) do %>
-          <button class="btn btn-primary btn-sm">Edit</button>
+          <button class="btn btn-primary btn-sm glyphicon glyphicon-pencil"></button>
         <% end %>
       <% end %>
       <% if @user == current_user or current_user.role == 'admin'  %>
         <%= link_to post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
-          <button class="btn btn-danger btn-sm">Delete</button>
+          <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
         <% end %>
       <% end %>
     </div>
@@ -75,11 +75,11 @@
         </div>
         <div class="edit-delete-group">
           <% if reply.user == current_user %>
-            <button class="btn btn-primary btn-sm reply-edit-btn">edit</button>
+            <button class="btn btn-primary btn-sm reply-edit-btn glyphicon glyphicon-pencil"></button>
           <% end %>
           <% if reply.user == current_user or current_user.role == 'admin' %>
             <%= link_to post_reply_path(@post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} do %>
-              <button class="btn btn-danger btn-sm">Delete</button>
+              <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
             <% end %>
           <% end %>
         </div>
