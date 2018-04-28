@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:index]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :confirm_user, only: [:edit, :update, :destroy]
   before_action :set_categories, only: [:index, :replies_count, :last_replied_at, :viewed_count]
@@ -129,7 +130,9 @@ class PostsController < ApplicationController
 
   def set_who_can_see_posts
     @posts.each do |post|
-      if post.authority == 'friend'
+      if !current_user 
+        @posts = @posts.where(authority: "all") 
+      elsif post.authority == 'friend'
         if !(current_user.is_friend?(post.user))
           @posts = @posts.includes(:user).where.not(id: post.id)
         end
