@@ -7,7 +7,7 @@
       <div>
         <%= f.text_area :content, placeholder: "What's on your mind?", required: true, maxlength: 500, rows: 10, class: "tweet-form-textarea form-control" %>
       </div>
-      <%= image_tag(post.picture,  {style: "width: 300px"}) if post.picture? %>
+      <%= image_tag(post.picture, {style: "width: 300px"}) if post.picture? %>
       <div class="post-form-choice">
         <div><%= f.label :picture, "Picture" %></div>
         <div><%= f.file_field :picture %></div>
@@ -24,10 +24,6 @@
           <div class="radio-inline">
             <%= f.radio_button :authority, 'myself' %>
             <%= f.label :authority, 'Myself' %>          
-          </div>
-          <div>
-            
-         
           </div>
         </div>
         <div><%= f.label :category, 'Category' %></div>

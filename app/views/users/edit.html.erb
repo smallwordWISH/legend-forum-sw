@@ -4,7 +4,7 @@
       <%= f.text_field :name, placeholder: 'Name', required: true, class: "form-control" %>
       <%= f.text_area :intro, placeholder: 'Introduce yourself', required: true, class: "form-control" %>
       <%= f.label :avatar, 'Avatar' %>
-      <%= image_tag(@user.avatar, width: '300px') if @user.avatar? %>
+      <%= image_tag(@user.avatar, {style: "width: 300px"}) if @user.avatar? %>
       <%= f.file_field :avatar %>
       <%= f.submit 'Update', class: "btn btn-primary" %>
     <% end %>

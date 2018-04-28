@@ -35,14 +35,21 @@
 }
 
 .avatar-sm {
-  object-fit: cover;
   width: 150px;
+  height: 150px;
   margin: 0 auto;
 }
 
+.avatar-sm img{
+  object-fit: cover;
+}
+
+.post-content-item .post-img {
+  width: 50%;
+  height: 300px;
+}
+
 .post-content-item .post-img img {
-  max-width: 50%;
-  max-height: 300px;
   object-fit: cover;
 }
 
@@ -62,11 +69,11 @@
 
 /* post new */
 
-.post-form {
+.post-form, .user-form  {
   margin-top: 20px;
 }
 
-.post-form input {
+.post-form input,  .user-form input {
   margin-bottom: 10px;
 }
 
@@ -100,7 +107,8 @@
 
 .user-profile-panel {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1fr 150px;
+  margin: 20px 0;
 }
 
 /* my comment */
@@ -160,6 +168,9 @@
 .my-friend-panel > div:nth-of-type(odd) {
   background: var(--lbrown);
 }
+
+/* user edit */
+
 
 /* feed */
 
