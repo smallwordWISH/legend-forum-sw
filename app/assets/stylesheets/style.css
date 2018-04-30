@@ -21,6 +21,7 @@
   padding: 10px 20px;
   background: var(--lbrown)
 }
+
 .post-panel {
   padding: 20px 0;
 }
@@ -171,6 +172,34 @@
 
 /* user edit */
 
+
+
+/* admin */
+
+.admin-nav-tabs {
+  margin-top: 20px;
+}
+
+.admin-category-table {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.admin-category-table tr th:first-child,
+.admin-category-table tr td:first-child, 
+.admin-user-table tr th:first-child,
+.admin-user-table tr td:first-child {
+  text-align: start;
+}
+
+.admin-category-form {
+  width: 70%;
+  margin: 20px auto;
+}
+
+.admin-user-table select {
+  color: #000;
+}
 
 /* feed */
 

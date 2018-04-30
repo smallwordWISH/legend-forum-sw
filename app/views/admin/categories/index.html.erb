@@ -1,5 +1,5 @@
 <div class="container">
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs admin-nav-tabs">
     <li role="presentation" class="active"><%= link_to 'Category List', admin_categories_path %></li>
     <li role="presentation"><%= link_to 'User List', admin_users_path %></li>
   </ul>
@@ -7,7 +7,7 @@
     <%= render partial: "admin/shared/admin_category_form", locals: {category: @category} %>
   </div>
   <div>
-    <table class="table table-bordered">
+    <table class="table table-bordered admin-category-table">
       <tr>
         <th>Name</th>
         <th>Method</th>

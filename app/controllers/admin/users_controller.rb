@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::AdminController
   before_action :set_user
 
   def index
-    @users = User.all.order(id: :asc)
+    @users = User.all.order(id: :asc).page(params[:page]).per(20)
   end
 
   def update
