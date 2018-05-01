@@ -78,7 +78,12 @@ class PostsController < ApplicationController
   end
   
   def show
-
+    if !@post.present?
+      flash[:alert] = "Post does not exist."
+      redirect_back(fallback_location: root_path)
+      return
+    end
+    
     if !(@post.user == current_user)
       if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
         flash[:alert] = "You are not authorized."
@@ -118,11 +123,9 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    if @post.present?
-      flash[:notice] = "Post was successfully deleted."
-    else
-      flash[:alert] = "post does not exist."
-    end
+
+    flash[:notice] = "Post was successfully deleted."
+
     redirect_to root_path
   end
 
@@ -137,7 +140,8 @@ class PostsController < ApplicationController
       if !current_user 
         @posts = @posts.where(authority: "all") 
       elsif post.authority == 'friend'
-        if !(current_user.is_friend?(post.user))
+        if current_user == post.user
+        elsif !(current_user.is_friend?(post.user))
           @posts = @posts.includes(:user).where.not(id: post.id)
         end
       elsif post.authority == 'myself'
@@ -164,9 +168,14 @@ class PostsController < ApplicationController
   end
 
   def confirm_user
-    if @post.user != current_user
+    if !@post.present?
+      flash[:alert] = "Post does not exist."
+      redirect_back(fallback_location: root_path)
+      return
+    elsif @post.user != current_user
       flash[:alert] = "You are not authorized."
       redirect_back(fallback_location: root_path)
+      return
     end
   end
 end

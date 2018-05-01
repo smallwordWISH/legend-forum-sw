@@ -1,6 +1,5 @@
 class Api::V1::PostsController < ApiController
-
-   before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!, except: :index
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :confirm_user, only: [:edit, :update, :destroy]
   before_action :set_categories, only: [:index]
@@ -53,7 +52,14 @@ class Api::V1::PostsController < ApiController
   end
   
   def show
-    
+    if !@post.present?
+      render json: {
+        message: "Post does not exist.",
+        status: 400
+      }
+      return
+    end
+
     if !@post
       render json: {
         message: "Can't find the post!",
@@ -93,31 +99,30 @@ class Api::V1::PostsController < ApiController
       @view.save
     end
 
-    render json: {
-        data: @post
-    } 
+    render json: @post
   end
 
 
   def update
-    @post.update(post_params)
-
-    if !@post.update(post_params)
-      flash[:alert] = "Post was failed to update. #{@post.errors.full_messages.to_sentence}"
-      redirect_back(fallback_location: root_path)
+    if @post.update(post_params) 
+      render json: {
+        message: "Post updated successfully!",
+        result: @post
+      }
+    else
+      render json: {
+        message: "Post was failed to update.",
+        errors: @post.errors
+      }
     end
-
-    redirect_to post_path(@post)
   end
 
   def destroy
     @post.destroy
-    if @post.present?
-      flash[:notice] = "Post was successfully deleted."
-    else
-      flash[:alert] = "post does not exist."
-    end
-    redirect_to root_path
+    
+    render json: {
+      message: "Post has successfully destroyed."
+    }
   end
 
   private
@@ -131,7 +136,9 @@ class Api::V1::PostsController < ApiController
       if !current_user 
         @posts = @posts.where(authority: "all") 
       elsif post.authority == 'friend'
-        if !(current_user.is_friend?(post.user))
+        if current_user == post.user
+        
+        elsif !(current_user.is_friend?(post.user))
           @posts = @posts.includes(:user).where.not(id: post.id)
         end
       elsif post.authority == 'myself'
@@ -158,10 +165,18 @@ class Api::V1::PostsController < ApiController
   end
 
   def confirm_user
-    if @post.user != current_user
-      flash[:alert] = "You are not authorized."
-      redirect_back(fallback_location: root_path)
+    if !@post.present?
+      render json: {
+        message: "Post does not exist.",
+        status: 400
+      }
+      return
+    elsif @post.user != current_user
+      render json: {
+        message: "You are not authorized."
+      }
+      return
     end
   end
-  
+
 end
