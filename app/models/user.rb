@@ -24,6 +24,8 @@ class User < ApplicationRecord
   has_many :applyers, -> { where(friendships: {status: "applying"})}, through: :inverse_friendships, source: :user
   has_many :applyer_friends, -> { where(friendships: {status: "friend"})}, through: :inverse_friendships, source: :user
 
+  before_create :generate_authentication_token
+  
   def is_admin?
     self.role == "admin"
   end
@@ -50,5 +52,9 @@ class User < ApplicationRecord
     else
       return false
     end
+  end
+
+  def generate_authentication_token
+     self.authentication_token = Devise.friendly_token
   end
 end
