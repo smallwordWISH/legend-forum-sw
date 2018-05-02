@@ -14,6 +14,10 @@
   color: var(--gray);
 }
 
+#categories-panel .nav {
+  text-align: center;
+}
+
 /* post show */
 
 .post-title h1 {

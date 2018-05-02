@@ -16,11 +16,9 @@ category_list = [
   {name: "media" }, 
   {name: "photography" },
   {name: "design" },
-  {name: "art" },
   {name: "music" }, 
   {name: "film" },
-  {name: "work out" },
-  {name: "psychology" },
+  {name: "work out" }
 ]
 
 category_list.each do |category|

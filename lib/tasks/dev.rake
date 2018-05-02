@@ -61,14 +61,24 @@ namespace :dev do
     Reply.destroy_all
 
     500.times do
+
+      post = Post.all.sample
+      user = User.all.sample
+
       Reply.create!(
         comment: FFaker::Lorem.sentence,
-        post: Post.all.sample,
-        user: User.all.sample
+        post: post,
+        user: user
+      )
+
+      View.create(
+        post: post,
+        user: user
       )
     end
 
     puts "have created  #{Reply.count} reply data"
+    puts "have created  #{View.count} view data"
   end
 
   task fake_favorite: :environment do
@@ -115,7 +125,7 @@ namespace :dev do
   end
 
   task fake_all: :environment do
-    Rake::Task['db:drop'].execute
+    #Rake::Task['db:drop'].execute
     Rake::Task['db:migrate'].execute
     Rake::Task['db:seed'].execute
     Rake::Task['dev:fake_user'].execute
