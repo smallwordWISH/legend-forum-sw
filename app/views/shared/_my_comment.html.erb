@@ -8,9 +8,21 @@
   <% end %>
 </ul>
 <div class="my-comment-panel">
-  <% user.replies.each do |reply| %>
-    <% if current_user != user %>
-      <% if reply.post.authority == 'friend' && !current_user.is_friend?(user) %>
+  <% @replies.each do |reply| %>
+    <% if current_user.role == 'admin' && current_user != @user %>
+      <% if reply.post.authority == 'myself' %>
+      <% else %>
+        <div id="reply-<%= reply.id %>" class="reply-panel">
+          <div class="my-comment-title">
+            <%= link_to reply.post.title, post_path(reply.post) %> <%= render partial: "shared/post_authority", locals: {post: reply.post} %>
+          </div>
+          <div class="reply-content-item">
+            <%= render partial: "shared/reply_comment", locals: {reply: reply} %>
+          </div>
+        </div>
+      <% end %>
+    <% elsif current_user != @user %>
+      <% if reply.post.authority == 'friend' && !(current_user.is_friend?(reply.post.user)) %>
       <% elsif reply.post.authority == 'myself' %>
       <% else %>
         <div class="my-comment-item">
@@ -23,31 +35,35 @@
         </div>
       <% end %>
     <% else %>
-      <div id="reply-<%= reply.id %>" class="reply-panel">
-        <div class="my-comment-title">
-          <%= link_to reply.post.title, post_path(reply.post) %> <%= render partial: "shared/post_authority", locals: {post: reply.post} %>
-        </div>
-        <div class="reply-content-item">
-          <%= render partial: "shared/reply_comment", locals: {reply: reply} %>
-        </div>
-        <div class="reply-edit-form">
-          <%= form_for [reply.post, reply], remote: true do |f| %>
-            <div class="form-group">
-              <div>
-                <%= f.text_area :comment, maxlength: 140, class: "form-control"%>
+      <% if reply.post.authority == 'friend' && !(current_user.is_friend?(reply.post.user)) && reply.post.user != current_user %>
+      <% elsif reply.post.authority == 'myself' && reply.post.user != current_user %>
+      <% else %>
+        <div id="reply-<%= reply.id %>" class="reply-panel">
+          <div class="my-comment-title">
+            <%= link_to reply.post.title, post_path(reply.post) %> <%= render partial: "shared/post_authority", locals: {post: reply.post} %>
+          </div>
+          <div class="reply-content-item">
+            <%= render partial: "shared/reply_comment", locals: {reply: reply} %>
+          </div>
+          <div class="reply-edit-form">
+            <%= form_for [reply.post, reply], remote: true do |f| %>
+              <div class="form-group">
+                <div>
+                  <%= f.text_area :comment, maxlength: 140, class: "form-control"%>
+                </div>
               </div>
-            </div>
-            <button type="button" class="btn btn-danger btn-sm reply-cancel-btn">Cancel</button>
-            <%= f.submit 'Update', remote: true, class: "btn btn-primary btn-sm" %> 
-          <% end %>
-        </div>
-        <div class="edit-delete-group">  
+              <button type="button" class="btn btn-danger btn-sm reply-cancel-btn">Cancel</button>
+              <%= f.submit 'Update', remote: true, class: "btn btn-primary btn-sm" %> 
+            <% end %>
+          </div>
+          <div class="edit-delete-group">  
             <button class="btn btn-primary btn-sm reply-edit-btn glyphicon glyphicon-pencil"></button>
             <%= link_to post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure to delete this reply?"} do %>
               <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
             <% end %>
-        </div>
-      </div>
+          </div>
+        </div> 
+      <% end %>
     <% end %>
   <% end %>  
 </div>

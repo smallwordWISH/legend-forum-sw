@@ -23,12 +23,20 @@ namespace :dev do
     authority_list = ["all", "friend", "myself"]
 
     300.times do |i|
-      Post.create!(
+      user = User.all.sample
+      post = Post.create!(
         title: FFaker::Lorem.sentence,
         content: FFaker::Lorem.paragraph,
-        user: User.all.sample,
+        user: user,
         authority: authority_list.sample
       )
+
+      if !View.where(user_id: user.id, post_id: post.id).present?
+        View.create(
+          post: post,
+          user: user
+        )
+      end
     end
 
     Post.all.each do |post|
@@ -56,7 +64,7 @@ namespace :dev do
   task fake_reply: :environment do
     Reply.destroy_all
 
-    500.times do
+    1000.times do
 
       post = Post.all.sample
       user = User.all.sample
@@ -67,10 +75,12 @@ namespace :dev do
         user: user
       )
 
-      View.create(
-        post: post,
-        user: user
-      )
+      if !View.where(user_id: user.id, post_id: post.id).present?
+        View.create(
+          post: post,
+          user: user
+        )
+      end
     end
 
     puts "have created  #{Reply.count} reply data"

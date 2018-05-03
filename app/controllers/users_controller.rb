@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user
+  before_action :set_posts
   before_action :confirm_user, only: [:edit, :update]
 
   def show
@@ -17,10 +18,18 @@ class UsersController < ApplicationController
     redirect_to user_path(@user)
   end
 
+  def my_comment 
+    @replies = Reply.where(user_id: params[:id]).includes(:user)
+  end
+
   private
 
   def set_user 
     @user = User.find_by_id(params[:id])
+  end
+
+  def set_posts
+    @posts = Post.where(user_id: @user.id)
   end
 
   def confirm_user

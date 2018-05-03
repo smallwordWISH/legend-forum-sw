@@ -11,25 +11,27 @@
       <% if !post %>
         <em>There is no draft.</em>
       <% elsif post.draft == true %>
-        <tr>
-          <td style="text-align: start;""><%= link_to post.title, post_path(post), style: "margin-left: 10px"  %> <%= render partial: "shared/post_authority", locals: {post: post} %></td>
-          <td>
-            <%= post.draft ? 'Draft' : 'Published' %>
-          </td>
-          <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-          <td>
-            <div class="edit-delete-group">
-              <% if post.user == current_user %>
-                <%= link_to edit_post_path(post) do %>
-                  <button class="btn btn-primary btn-sm glyphicon glyphicon-pencil"></button>
+        <% if current_user == post.user %>
+          <tr>
+            <td style="text-align: start;""><%= link_to post.title, post_path(post), style: "margin-left: 10px"  %> <%= render partial: "shared/post_authority", locals: {post: post} %></td>
+            <td>
+              <%= post.draft ? 'Draft' : 'Published' %>
+            </td>
+            <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td>
+              <div class="edit-delete-group">
+                <% if post.user == current_user %>
+                  <%= link_to edit_post_path(post) do %>
+                    <button class="btn btn-primary btn-sm glyphicon glyphicon-pencil"></button>
+                  <% end %>
+                  <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
+                    <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+                  <% end %>
                 <% end %>
-                <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
-                  <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
-                <% end %>
-              <% end %>
-            </div>            
-          </td>
-        </tr>
+              </div>            
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     <% end %>
   </table>
