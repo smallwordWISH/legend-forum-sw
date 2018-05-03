@@ -86,23 +86,24 @@ class PostsController < ApplicationController
     end
     
     if current_user.role != "admin"
-      if !(@post.user == current_user)
+      if @post.user != current_user
         if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
           flash[:alert] = "You are not authorized."
           redirect_back(fallback_location: root_path)
-        elsif @post.authority == 'myself' && !(current_user == @post.user)
+        elsif @post.authority == 'myself'
           flash[:alert] = "You are not authorized."
           redirect_back(fallback_location: root_path)
         elsif @post.draft == true
           flash[:alert] = "You are not authorized."
           redirect_back(fallback_location: root_path)        
         end
+      else 
       end
-    else 
-      if @post.authority == 'myself' && !(current_user == @post.user)
+    else
+      if @post.authority == 'myself' && current_user != @post.user
         flash[:alert] = "You are not authorized."
         redirect_back(fallback_location: root_path)
-      elsif @post.draft == true
+      elsif @post.draft == true && current_user != @post.user
         flash[:alert] = "You are not authorized."
         redirect_back(fallback_location: root_path)        
       end
