@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+Category.destroy_all
+
 category_list = [ 
   {name: "technology" },
   {name: "culture" },
@@ -27,6 +29,8 @@ end
 
 puts "have created #{Category.count} category data"
 
+
+User.destroy_all
 
 User.create(name:"admin", email: "admin@example.com", password: "12345678", role: "admin")
 puts "Default admin created! ( email: admin@example.com, password: 12345678 )"
