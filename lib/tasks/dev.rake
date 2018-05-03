@@ -22,7 +22,7 @@ namespace :dev do
     Post.destroy_all
     authority_list = ["all", "friend", "myself"]
 
-    300.times do |i|
+    200.times do |i|
       user = User.all.sample
       post = Post.create!(
         title: FFaker::Lorem.sentence,
@@ -64,7 +64,7 @@ namespace :dev do
   task fake_reply: :environment do
     Reply.destroy_all
 
-    1000.times do
+    500.times do
 
       post = Post.all.sample
       user = User.all.sample
