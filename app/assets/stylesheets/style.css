@@ -52,6 +52,7 @@
 .post-content-item .post-img {
   width: 50%;
   height: 300px;
+  margin-bottom: 20px;
 }
 
 .post-content-item .post-img img {
@@ -102,6 +103,12 @@
 
 .reply-edit-form {
   display: none;
+}
+
+/* post new edit */
+
+.post-form-choice input {
+  color: #FFF; 
 }
 
 /* user show */

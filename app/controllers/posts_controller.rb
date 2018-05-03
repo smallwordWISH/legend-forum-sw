@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
   def last_replied_at
     if params[:category_id].present?
-      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC')
+      @posts = Post.includes(:replies, :categories).join(:replies).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC')
     else
       @posts = Post.includes(:replies).where(draft: false).order('replies.created_at DESC')
     end
@@ -67,6 +67,7 @@ class PostsController < ApplicationController
         render "new"
       end
     else 
+      @post.draft = false
       if @post.save
         flash[:notice] = "Post was successfully created."
         redirect_to post_path(@post)
@@ -97,6 +98,14 @@ class PostsController < ApplicationController
           redirect_back(fallback_location: root_path)        
         end
       end
+    else 
+      if @post.authority == 'myself' && !(current_user == @post.user)
+        flash[:alert] = "You are not authorized."
+        redirect_back(fallback_location: root_path)
+      elsif @post.draft == true
+        flash[:alert] = "You are not authorized."
+        redirect_back(fallback_location: root_path)        
+      end
     end
 
     @reply = Reply.new
@@ -113,14 +122,31 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post.update(post_params)
+
+    if params[:commit] == 'Save Draft'
+      @post.draft = true
+      if @post.update(post_params)
+        flash[:notice] = "Draft was successfully saved."
+        redirect_to post_path(@post)
+      else
+        flash.now[:alert] = "Draft was failed to saved. #{@post.errors.full_messages.to_sentence}"
+        render "new"
+      end
+    else 
+      @post.draft = false
+      if @post.update(post_params)
+        flash[:notice] = "Post was successfully created."
+        redirect_to post_path(@post)
+      else
+        flash.now[:alert] = "Post was failed to created. #{@post.errors.full_messages.to_sentence}"
+        render "new"
+      end
+    end 
 
     if !@post.update(post_params)
       flash[:alert] = "Post was failed to update. #{@post.errors.full_messages.to_sentence}"
       redirect_back(fallback_location: root_path)
     end
-
-    redirect_to post_path(@post)
   end
 
   def destroy
@@ -138,7 +164,6 @@ class PostsController < ApplicationController
   end
 
   def set_who_can_see_posts
-    
     @posts.each do |post|
       if !current_user 
         @posts = @posts.where(authority: "all")
@@ -149,7 +174,13 @@ class PostsController < ApplicationController
             @posts = @posts.includes(:user).where.not(id: post.id)
           end
         elsif post.authority == 'myself'
-          if !(current_user == post.user)
+          if current_user != post.user
+            @posts = @posts.includes(:user).where.not(id: post.id)
+          end
+        end
+      elsif current_user.role == "admin"
+        if post.authority == 'myself'
+          if current_user != post.user
             @posts = @posts.includes(:user).where.not(id: post.id)
           end
         end
