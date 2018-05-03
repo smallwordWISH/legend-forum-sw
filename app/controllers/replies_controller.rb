@@ -50,7 +50,8 @@ class RepliesController < ApplicationController
   end
 
   def confirm_user
-    if @reply.user != current_user
+    if current_user.role == "admin"
+    elsif @reply.user != current_user
       flash[:alert] = "You are not authorized."
       redirect_back(fallback_location: root_path)
     end

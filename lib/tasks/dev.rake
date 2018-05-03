@@ -1,9 +1,5 @@
 namespace :dev do
   task fake_user: :environment do
-    User.destroy_all
-
-    User.create(name:"admin", email: "admin@example.com", password: "12345678", role: "admin")
-    puts "Default admin created! ( email: admin@example.com, password: 12345678 )"
 
     20.times do |i|
       name = FFaker::Name::first_name
@@ -94,19 +90,6 @@ namespace :dev do
     puts "now you have #{Favorite.count} favorite data"
   end
 
-  # task fake_views: :environment do
-  #   View.destroy_all
-
-  #   50.times do
-  #     View.create!(
-  #       user: User.all.sample,
-  #       post: Post.all.sample
-  #     )
-  #   end
-  #   puts "have created fake Views"
-  #   puts "now you have #{View.count} View data"
-  # end
-
   task fake_friendship: :environment do
     Friendship.destroy_all
     
@@ -125,12 +108,11 @@ namespace :dev do
   end
 
   task fake_all: :environment do
-    #Rake::Task['db:drop'].execute
+    Rake::Task['db:drop'].execute
     Rake::Task['db:migrate'].execute
     Rake::Task['db:seed'].execute
     Rake::Task['dev:fake_user'].execute
     Rake::Task['dev:fake_post'].execute
-    # Rake::Task['dev:fake_categories_posts'].execute
     Rake::Task['dev:fake_reply'].execute
     Rake::Task['dev:fake_favorite'].execute
     Rake::Task['dev:fake_friendship'].execute

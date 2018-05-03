@@ -26,3 +26,7 @@ category_list.each do |category|
 end
 
 puts "have created #{Category.count} category data"
+
+
+User.create(name:"admin", email: "admin@example.com", password: "12345678", role: "admin")
+puts "Default admin created! ( email: admin@example.com, password: 12345678 )"

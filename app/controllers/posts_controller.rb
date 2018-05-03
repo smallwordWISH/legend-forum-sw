@@ -84,16 +84,18 @@ class PostsController < ApplicationController
       return
     end
     
-    if !(@post.user == current_user)
-      if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
-        flash[:alert] = "You are not authorized."
-        redirect_back(fallback_location: root_path)
-      elsif @post.authority == 'myself' && !(current_user == @post.user)
-        flash[:alert] = "You are not authorized."
-        redirect_back(fallback_location: root_path)
-      elsif @post.draft == true
-        flash[:alert] = "You are not authorized."
-        redirect_back(fallback_location: root_path)        
+    if current_user.role != "admin"
+      if !(@post.user == current_user)
+        if @post.authority == 'friend' && !(current_user.is_friend?(@post.user))
+          flash[:alert] = "You are not authorized."
+          redirect_back(fallback_location: root_path)
+        elsif @post.authority == 'myself' && !(current_user == @post.user)
+          flash[:alert] = "You are not authorized."
+          redirect_back(fallback_location: root_path)
+        elsif @post.draft == true
+          flash[:alert] = "You are not authorized."
+          redirect_back(fallback_location: root_path)        
+        end
       end
     end
 
@@ -136,17 +138,19 @@ class PostsController < ApplicationController
   end
 
   def set_who_can_see_posts
-    @posts.each do |post|
-      if !current_user 
-        @posts = @posts.where(authority: "all") 
-      elsif post.authority == 'friend'
-        if current_user == post.user
-        elsif !(current_user.is_friend?(post.user))
-          @posts = @posts.includes(:user).where.not(id: post.id)
-        end
-      elsif post.authority == 'myself'
-        if !(current_user == post.user)
-          @posts = @posts.includes(:user).where.not(id: post.id)
+    if current_user.role != "admin"
+      @posts.each do |post|
+        if !current_user 
+          @posts = @posts.where(authority: "all") 
+        elsif post.authority == 'friend'
+          if current_user == post.user
+          elsif !(current_user.is_friend?(post.user))
+            @posts = @posts.includes(:user).where.not(id: post.id)
+          end
+        elsif post.authority == 'myself'
+          if !(current_user == post.user)
+            @posts = @posts.includes(:user).where.not(id: post.id)
+          end
         end
       end
     end
@@ -172,6 +176,7 @@ class PostsController < ApplicationController
       flash[:alert] = "Post does not exist."
       redirect_back(fallback_location: root_path)
       return
+    elsif current_user.role == "admin"
     elsif @post.user != current_user
       flash[:alert] = "You are not authorized."
       redirect_back(fallback_location: root_path)
