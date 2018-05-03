@@ -138,11 +138,12 @@ class PostsController < ApplicationController
   end
 
   def set_who_can_see_posts
-    if current_user.role != "admin"
-      @posts.each do |post|
-        if !current_user 
-          @posts = @posts.where(authority: "all") 
-        elsif post.authority == 'friend'
+    
+    @posts.each do |post|
+      if !current_user 
+        @posts = @posts.where(authority: "all")
+      elsif current_user.role != "admin"        
+        if post.authority == 'friend'
           if current_user == post.user
           elsif !(current_user.is_friend?(post.user))
             @posts = @posts.includes(:user).where.not(id: post.id)
