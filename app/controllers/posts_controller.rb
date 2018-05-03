@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
   def last_replied_at
     if params[:category_id].present?
-      @posts = Post.includes(:replies, :categories).join(:replies).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC')
+      @posts = Post.includes(:replies, :categories).where(draft: false, categories: {id: params[:category_id]}).order('replies.created_at DESC')
     else
       @posts = Post.includes(:replies).where(draft: false).order('replies.created_at DESC')
     end

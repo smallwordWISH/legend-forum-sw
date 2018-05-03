@@ -58,7 +58,7 @@
             </td>
             <td>
               <% if post.replies.present? %>
-                <%= post.replies.last.created_at.strftime("%Y-%m-%d %H:%M") %>
+                <%= post.replies.first.created_at.strftime("%Y-%m-%d %H:%M") %>
               <% else %>
                 -
               <% end %>
