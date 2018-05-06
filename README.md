@@ -5,7 +5,7 @@
 ### index view all posts 
 1. GET,	/api/v1/posts
 
-### show post:	
+### show post
 1. GET,	/api/v1/posts/:id
 2. params:
 (a)params: auth_token
@@ -18,7 +18,7 @@
 (c) authority: string(all or firend or myself)
 (d) draft(choice): boolean
 (e) category_ids[](choice): integer
-*for multiple categories add 
+*for multiple categories add anothor category_ids[] parmas, e.g. category_ids[]=3&category_ids[]=4
 (f) auth_token
 
 ### edit post
