@@ -83,8 +83,8 @@ namespace :dev do
       end
     end
 
-    puts "have created  #{Reply.count} reply data"
-    puts "have created  #{View.count} view data"
+    puts "have created #{Reply.count} reply data"
+    puts "have created #{View.count} view data"
   end
 
   task fake_favorite: :environment do
@@ -113,7 +113,7 @@ namespace :dev do
       end
     end
 
-    puts "have created fake followships"
+    puts "have created fake friendships"
     puts "now you have #{Friendship.count} friend data"
   end
 

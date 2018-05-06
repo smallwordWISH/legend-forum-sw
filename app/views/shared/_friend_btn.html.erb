@@ -3,7 +3,7 @@
     <h4><span class="label label-primary label-lg glyphicon glyphicon-ok" style="padding: 5px 10px 8px 10px"> Friend</span></h4>
   <% elsif current_user.is_be_applying?(user) %>
     <div>
-      <%= link_to friendships_path do %>
+      <%= link_to user_path(current_user) do %>
         <button class="btn btn-default btn-sm">Go to confirm</button>
       <% end %>
     </div>

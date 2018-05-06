@@ -6,6 +6,12 @@ class ApiController < ActionController::Base
       user = User.find_by_authentication_token(params[:auth_token])
       # sign_in 是 Devise 的方法
       sign_in(user, store: false) if user
+    else
+      render json: {
+        message: "Please login.",
+        login_url: "/api/v1/login",
+        status: "401"
+      }
     end
   end
 end
