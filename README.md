@@ -1,24 +1,42 @@
-# README
+# Legend Forum
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Web API
 
-Things you may want to cover:
+### index view all posts 
+1. GET,	/api/v1/posts
 
-* Ruby version
+### show post:	
+1. GET,	/api/v1/posts/:id
+2. params:
+(a)params: auth_token
 
-* System dependencies
+### create post	
+1. POST,	/api/v1/posts
+2. params: 
+(a) title: string
+(b) content: string
+(c) authority: string(all or firend or myself)
+(d) draft(choice): boolean
+(e) category_ids[](choice): integer
+*for multiple categories add 
+(f) auth_token
 
-* Configuration
+### edit post
+1. PATCH, /api/v1/posts/:id
+2. params: *same as above
 
-* Database creation
+### delete post
+1. DELETE,	/api/v1/posts/:id
+2. params:
+(a)auth_token
 
-* Database initialization
+### login to get auth_token
+1. POST, /api/v1/login
+2. params: 
+(a)email
+(b)password
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### logout
+1. POST, /api/v1/logout
+2. params:
+(a) auth_token
