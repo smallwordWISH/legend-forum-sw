@@ -1,5 +1,5 @@
 class Api::V1::PostsController < ApiController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user_from_token!, except: :index
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :confirm_user, only: [:edit, :update, :destroy]
   before_action :set_categories, only: [:index]
