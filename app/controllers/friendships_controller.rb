@@ -38,12 +38,12 @@ class FriendshipsController < ApplicationController
       @friendship.destroy_all
     end
 
-    if request.referer.include? ('/posts/')
-      render 'destroy.js.erb'
-      return
-    else
+    if URI(request.referer).path == "/users/#{current_user.id}" 
       render 'users/my_friend.js.erb'
       return
+    else
+      render 'destroy.js.erb'
+      return 
     end
   end
 
