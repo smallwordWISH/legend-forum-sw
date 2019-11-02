@@ -60,4 +60,4 @@
 #     # password: "please use keys"
 #   }
 
-server '35.194.185.223', user: 'deploy', roles: %w{app db web}, my_property: :my_value
+server '35.229.129.21', user: 'deploy', roles: %w{app db web}, my_property: :my_value
